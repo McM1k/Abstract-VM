@@ -26,8 +26,16 @@ public:
  */
 	Operand(Operand value, eOperandType type) :
 			_type(type),
-			_precision(static_cast<int>(type)), //cast could nest compiling errors
-			_value(value) {
+			_precision(static_cast<int>(type)) //cast could nest compiling errors
+			{
+				this->_value = value;
+	};
+
+	Operand(Operand const & src) :
+			_type(src.getType()),
+			_precision(src.getPrecision())
+			{
+				*this = src;
 	};
 
 /*
@@ -49,6 +57,13 @@ public:
 
 	T				getValue( void ) const{
 		return  this->_value;
+	};
+
+/*
+ * Setters
+ */
+	void			setValue(T value){
+		this->_value = value;
 	};
 
 /*
@@ -77,7 +92,7 @@ public:
  */
 	IOperand const * operator+( IOperand const & rhs ) const{
 		if (rhs.getPrecision() > this->getPrecision()) {
-
+			Operand operand<rhs.getType()>() //TODO : stuff
 		}
 		else
 
@@ -98,10 +113,9 @@ public:
 private:
 	int				const _precision;
 	eOperandType	const _type;
-	T				const _value;
+	T				_value;
 
 	Operand(void){};
-	Operand(Operand const & src){};
 };
 
 #endif
