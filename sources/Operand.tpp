@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Operand.tpp                                           :+:      :+:    :+:   */
+/*   Operand.tpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gboudrie <gboudrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,14 +19,14 @@
 # include <sstream>
 
 template <typename T>
-class T : public IOperand {
+class Operand : public IOperand {
 public:
 /*
  * Constructors
  */
-	T(T value, eOperandType type) :
+	Operand(Operand value, eOperandType type) :
 			_type(type),
-			_precision(static_cast<int>(type)), //
+			_precision(static_cast<int>(type)), //cast could nest compiling errors
 			_value(value) {
 	};
 
@@ -100,9 +100,8 @@ private:
 	eOperandType	const _type;
 	T				const _value;
 
-	T(void){};
-	T(T const &src) {};
-
+	Operand(void){};
+	Operand(Operand const & src){};
 };
 
 #endif
