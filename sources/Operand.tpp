@@ -92,19 +92,43 @@ public:
  */
 	IOperand const * operator+( IOperand const & rhs ) const{
 		if (rhs.getPrecision() > this->getPrecision()) {
-			Operand operand<rhs.getType()>() //TODO : stuff
+			Operand operand<rhs.getType()>(this->getValue() + rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 		}
 		else
-
+			Operand operand<this->getType()>(this->getValue() + rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 	};
 
-	IOperand const * operator-( IOperand const & rhs ) const;
+	IOperand const * operator-( IOperand const & rhs ) const{
+		if (rhs.getPrecision() > this->getPrecision()) {
+			Operand operand<rhs.getType()>(this->getValue() - rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+		}
+		else
+			Operand operand<this->getType()>(this->getValue() - rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+	};
 
-	IOperand const * operator*( IOperand const & rhs ) const;
+	IOperand const * operator*( IOperand const & rhs ) const{
+		if (rhs.getPrecision() > this->getPrecision()) {
+			Operand operand<rhs.getType()>(this->getValue() * rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+		}
+		else
+			Operand operand<this->getType()>(this->getValue() * rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+	};
 
-	IOperand const * operator/( IOperand const & rhs ) const;
+	IOperand const * operator/( IOperand const & rhs ) const{
+		if (rhs.getPrecision() > this->getPrecision()) {
+			Operand operand<rhs.getType()>(this->getValue() / rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+		}
+		else
+			Operand operand<this->getType()>(this->getValue() / rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+	};
 
-	IOperand const * operator%( IOperand const & rhs ) const;
+	IOperand const * operator%( IOperand const & rhs ) const{
+		if (rhs.getPrecision() > this->getPrecision()) {
+			Operand operand<rhs.getType()>(this->getValue() % rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+		}
+		else
+			Operand operand<this->getType()>(this->getValue() % rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+	};
 
 /*
  * Exceptions
