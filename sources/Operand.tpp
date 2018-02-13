@@ -24,8 +24,8 @@ public:
 /*
  * Constructors
  */
-	Operand(T value, eOperandType type, T min, T max) :
-			_type(type),
+	Operand(T value, T min, T max) :
+			_type(T),// may not compile
 			_precision(static_cast<int>(type)), //cast could nest compiling errors
 			_min(min),
 			_max(max)

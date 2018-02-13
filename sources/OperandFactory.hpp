@@ -24,13 +24,13 @@ public:
 
 private:
 
-	std::array
+	std::array _creator;
 
-	IOperand const * createInt8( std::string const & value ) const;
-	IOperand const * createInt16( std::string const & value ) const;
-	IOperand const * createInt32( std::string const & value ) const;
-	IOperand const * createFloat( std::string const & value ) const;
-	IOperand const * createDouble( std::string const & value ) const;
+	IOperand const * createInt8( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
+	IOperand const * createInt16( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
+	IOperand const * createInt32( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
+	IOperand const * createFloat( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
+	IOperand const * createDouble( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
 
 	OperandFactory(OperandFactory const &src);
 	OperandFactory &operator=(OperandFactory const &rhs); //equals
