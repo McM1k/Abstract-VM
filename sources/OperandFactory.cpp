@@ -17,11 +17,12 @@
  * Constructors
  */
 OperandFactory::OperandFactory(void) {
+	//TODO : create an array with member functions pointers in it
 }
 
 OperandFactory::OperandFactory(OperandFactory const &src) {
 	*this = src;
-}
+}// UNUSED
 
 /*
  * Destructors
@@ -44,7 +45,7 @@ OperandFactory &OperandFactory::operator=(OperandFactory const &rhs) {
 	if (this != &rhs) {
 	}
 	return *this;
-}
+}// UNUSED
 
 /*
  * ToString

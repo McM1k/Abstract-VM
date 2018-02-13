@@ -6,11 +6,11 @@
 #    By: gboudrie <gboudrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 20:06:05 by gboudrie          #+#    #+#              #
-#    Updated: 2018/01/18 12:57:13 by gboudrie         ###   ########.fr        #
+#    Updated: 2018/02/13 13:43:57 by gboudrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#ansi chars
+# ansi chars
 LOG = 	\033[2K
 BLUE = 	\033[1;34m
 YELLOW =\033[1;33m
@@ -34,7 +34,7 @@ CC =		clang++
 CFLAGS =	-Wall -Wextra -Werror
 
 # binaries
-EXE =       ex02.out
+EXE =       AbstractVM
 LIB_A =
 
 # dir
@@ -45,7 +45,7 @@ INC_DIR =	includes
 # libs
 
 # sources
-SRC_NAME =	main.cpp
+SRC_NAME =	Operand.tpp OperandFactory.cpp
 
 # objects
 OBJ_NAME =		$(SRC_NAME:.cpp=.o)
