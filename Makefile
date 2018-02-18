@@ -45,7 +45,8 @@ INC_DIR =	includes
 # libs
 
 # sources
-SRC_NAME =	Operand.tpp OperandFactory.cpp
+SRC_NAME =	Operand.tpp\
+			OperandFactory.cpp
 
 # objects
 OBJ_NAME =		$(SRC_NAME:.cpp=.o)

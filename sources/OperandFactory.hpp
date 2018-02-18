@@ -14,6 +14,9 @@
 # define OPERANDFACTORY_HPP
 # include "Operand.tpp"
 # include <iostream>
+# include <array>
+
+typedef IOperand const *(*ftAddrCreate) (std::string const & value);
 
 class OperandFactory {
 public:

@@ -13,11 +13,11 @@
 #include "OperandFactory.hpp"
 #include <iostream>
 
-/*
- * Constructors
- */
+/****************************************************************************
+ * Constructors * Constructors * Constructors * Constructors * Constructors *
+ ****************************************************************************/
 OperandFactory::OperandFactory(void) {
-	OperandFactory::_creator = std::array<void*, 5>();
+	OperandFactory::_creator = std::array<ftAddrCreate , 5>();
 	_creator.at(eOperandType::Int8) = &(OperandFactory::createInt8());
 	_creator.at(eOperandType::Int16) = &(OperandFactory::createInt16());
 	_creator.at(eOperandType::Int32) = &(OperandFactory::createInt32());
@@ -30,36 +30,40 @@ OperandFactory::OperandFactory(OperandFactory const &src) {
 	*this = src;
 }// UNUSED
 
-/*
- * Destructors
- */
+/***********************************************************************
+ * Destructors * Destructors * Destructors * Destructors * Destructors *
+ ***********************************************************************/
 OperandFactory::~OperandFactory(void) {
 }
 
-/*
- * Getters
- */
+/***********************************************************************
+ * Getters * Getters * Getters * Getters * Getters * Getters * Getters *
+ ***********************************************************************/
 
-/*
- * Setters
- */
+/***********************************************************************
+ * Setters * Setters * Setters * Setters * Setters * Setters * Setters *
+ ***********************************************************************/
 
-/*
- * Equals
- */
+/*************************************************************************
+ * Operators * Operators * Operators * Operators * Operators * Operators *
+ *************************************************************************/
 OperandFactory &OperandFactory::operator=(OperandFactory const &rhs) {
 	if (this != &rhs) {
 	}
 	return *this;
 }// UNUSED
 
-/*
- * ToString
- */
+/******************************************************************************
+ * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
+ ******************************************************************************/
 
-/*
- * Other
- */
+/*************************************************************************
+ * Other * Other * Other * Other * Other * Other * Other * Other * Other *
+ *************************************************************************/
+IOperand const* OperandFactory::createOperand(eOperandType type, const std::string &value) const {
+    return this->_creator[type](value);
+}
+
 IOperand const* OperandFactory::createInt8(const std::string &value) const throw(Operand::OverFlowException, Operand::UnderFlowException){
 	char min = std::numeric_limits<char>::min(), max = std::numeric_limits<char>::max();
 	long long tmpValue = std::stoi(value, nullptr);
@@ -125,6 +129,6 @@ IOperand const* OperandFactory::createDouble(const std::string &value) const thr
 	}
 }
 
-/*
- * Exceptions
- */
+/*******************************************************************************
+ * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions *
+ *******************************************************************************/

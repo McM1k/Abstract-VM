@@ -21,9 +21,9 @@
 template <typename T>
 class Operand : public IOperand {
 public:
-/*
- * Constructors
- */
+/****************************************************************************
+ * Constructors * Constructors * Constructors * Constructors * Constructors *
+ ****************************************************************************/
 	Operand(T value, T min, T max) :
 			_type(T),// may not compile
 			_precision(static_cast<int>(type)), //cast could nest compiling errors
@@ -42,14 +42,14 @@ public:
 				*this = src;
 	}
 
-/*
- * Destructors
- */
+/***********************************************************************
+ * Destructors * Destructors * Destructors * Destructors * Destructors *
+ ***********************************************************************/
 	virtual ~T(void){}
 
-/*
- * Getters
- */
+/***********************************************************************
+ * Getters * Getters * Getters * Getters * Getters * Getters * Getters *
+ ***********************************************************************/
 
 	int				getPrecision( void ) const{
 		return this->_precision;
@@ -59,7 +59,7 @@ public:
 		return this->_type;
 	} // Type of the instance
 
-	T				getValue( void ) const{
+	T       		getValue( void ) const{
 		return this->_value;
 	}
 
@@ -71,26 +71,32 @@ public:
 		return this->_max;
 	}
 
-/*
- * Setters
- */
+/***********************************************************************
+ * Setters * Setters * Setters * Setters * Setters * Setters * Setters *
+ ***********************************************************************/
 	void			setValue(T value){
 		this->_value = value;
 	}
 
-/*
- * Equals
- */
-	T &operator=(T const &rhs){
+/*************************************************************************
+ * Operators * Operators * Operators * Operators * Operators * Operators *
+ *************************************************************************/
+	IOperand &operator=(T const &rhs){
 		if (this != &rhs) {
 			this->_value = rhs.getValue();
 		}
 		return *this;
-	} //equals
+	}
 
-/*
- * ToString
- */
+    bool &operator==(T const &rhs){
+        if (this->_value == rhs.getValue())
+            return true;
+        return false;
+    }
+
+/******************************************************************************
+ * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
+ ******************************************************************************/
 	std::string const & toString( void ) const{
 		std::stringstream ss;
 		std::string str;
@@ -99,9 +105,9 @@ public:
 		return str;
 	} // String representation of the instance
 
-/*
- * Other
- */
+/*************************************************************************
+ * Other * Other * Other * Other * Other * Other * Other * Other * Other *
+ *************************************************************************/
 	IOperand const * operator+( IOperand const & rhs ) const throw(OverFlowException, UnderFlowException){
 		if (rhs.getPrecision() > this->getPrecision()) {
 			if ((this->getValue() + rhs.getValue()) > rhs.getMax())
@@ -200,9 +206,9 @@ public:
 		}
 	}
 
-/*
- * Exceptions
- */
+/*******************************************************************************
+ * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions *
+ *******************************************************************************/
 	class OverFlowException : public std::exception {
 	public :
 		virtual const char *what() const throw(){
