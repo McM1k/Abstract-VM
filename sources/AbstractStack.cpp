@@ -68,8 +68,16 @@ void AbstractStack::pop() throw(EmptyStackException){
         this->_stack.pop();
 }
 
-void AbstractStack::dump() { //TODO: stuff (make a copy then print/pop each element)
+void AbstractStack::dump() {
+    AbstractStack dumpedStack = AbstractStack(*this);
+    std::stringstream ss;
 
+    while (!dumpedStack.getStack().empty()){
+        ss << dumpedStack.getStack().top()->getValue() << std::cout;
+        dumpedStack.getStack().pop();
+    }
+
+    std::cout << ss.str();
 }
 
 void AbstractStack::assert(IOperand *value) const throw(EmptyStackException, AssertFailException){
@@ -82,49 +90,93 @@ void AbstractStack::assert(IOperand *value) const throw(EmptyStackException, Ass
 void AbstractStack::add() throw(StackTooShortException) {
     if (this->_stack.size() < 2)
         throw StackTooShortException;
-    else {//TODO: stuff
+    else {
+        IOperand a = this->_stack.top();
+        this->_stack.pop();
+        IOperand b = this->_stack.top();
+        this->_stack.pop();
 
+        push(a + b);
     }
 }
 
 void AbstractStack::sub() throw(StackTooShortException){
     if (this->_stack.size() < 2)
         throw StackTooShortException;
-    else {//TODO: stuff
+    else {
+        IOperand a = this->_stack.top();
+        this->_stack.pop();
+        IOperand b = this->_stack.top();
+        this->_stack.pop();
 
+        push(a - b);
     }
 }
 
 void AbstractStack::mul() throw(StackTooShortException){
     if (this->_stack.size() < 2)
         throw StackTooShortException;
-    else {//TODO: stuff
+    else {
+        IOperand a = this->_stack.top();
+        this->_stack.pop();
+        IOperand b = this->_stack.top();
+        this->_stack.pop();
 
+        push(a * b);
     }
 }
 
 void AbstractStack::div() throw(StackTooShortException, DivByZeroException){
     if (this->_stack.size() < 2)
         throw StackTooShortException;
-    else {//TODO: stuff (dont forget the DIV0)
-
+    else {
+        IOperand a = this->_stack.top();
+        this->_stack.pop();
+        IOperand b = this->_stack.top();
+        this->_stack.pop();
+        if (!b.getValue()){
+            push(b);
+            push(a);
+            throw (DivByZeroException);
+        }
+        else
+            push(a / b);
     }
 }
 
-void AbstractStack::mod() throw(StackTooShortException, DivByZeroException){
+void AbstractStack::mod() throw(StackTooShortException, DivByZeroException, ModOnFloatException){
     if (this->_stack.size() < 2)
         throw StackTooShortException;
-    else {//TODO: stuff (dont forget the DIV0)
-
+    else {
+        IOperand a = this->_stack.top();
+        this->_stack.pop();
+        IOperand b = this->_stack.top();
+        this->_stack.pop();
+        if (!b.getValue()){
+            push(b);
+            push(a);
+            throw (DivByZeroException);
+        }
+        else if (a.getPrecision() > 2 || b.getPrecision() > 2){
+            push(b);
+            push(a);
+            throw (ModOnFloatException);
+        }
+        else
+            push(a % b);
     }
 }
 
-void AbstractStack::print() const throw(EmptyStackException, AssertFailException){
-//TODO: stuff (maybe create a new assertException like notPrintableException)
-}
-
-void AbstractStack::exit() const throw(NoExitInstructionException){
-//TODO: stuff (maybe no exception in this one)
+void AbstractStack::print() const throw(EmptyStackException, NotPrintableException){
+    if (this->_stack.empty())
+        throw EmptyStackException;
+    else {
+        IOperand * myChar = this->_stack.top();
+        if (myChar->getType() != eOperandType::Int8)
+            throw (NotPrintableException);
+        else
+            std::cout << atoi(myChar.getValue()) << std::endl;
+    }
 }
 
 /*******************************************************************************
@@ -146,6 +198,10 @@ const char* AbstractStack::DivByZeroException::what() const {
     return "You tried to divide by zero, which is impossible";
 }
 
-const char* AbstractStack::NoExitInstructionException::what() const {
-    return "AbstractVM didn't recieve the EXIT instruction at the end of the program";
+const char* AbstractStack::NotPrintableException::what() const {
+    return "Not an Int8 : cannot print";
+}
+
+const char* AbstractStack::ModOnFloatException::what() const {
+    return "Can't optain a modulo on an non-euclidian division";
 }

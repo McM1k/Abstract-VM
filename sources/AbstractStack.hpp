@@ -13,8 +13,11 @@
 #ifndef ABSTRACTSTACK_HPP
 # define ABSTRACTSTACK_HPP
 # include "IOperand.hpp"
+# include "eOperandType.hpp"
 # include <iostream>
+# include <sstream>
 # include <stack>
+# include <cstdlib>
 
 class AbstractStack {
 public:
@@ -41,10 +44,15 @@ public:
     public :
         virtual const char *what() const throw();
     };
-    class NoExitInstructionException : public std::exception {
+    class NotPrintableException : public std::exception {
     public :
         virtual const char *what() const throw();
     };
+    class ModOnFloatException : public std::exception {
+    public :
+        virtual const char *what() const throw();
+    };
+
 
 private:
     std::stack _stack;
@@ -57,10 +65,8 @@ private:
     void sub(void) throw(StackTooShortException);
     void mul(void) throw(StackTooShortException);
     void div(void) throw(StackTooShortException, DivByZeroException);
-    void mod(void) throw(StackTooShortException, DivByZeroException);
-    void print(void) const throw(EmptyStackException, AssertFailException);
-    void exit(void) const throw(NoExitInstructionException);
-
+    void mod(void) throw(StackTooShortException, DivByZeroException, ModOnFloatException);
+    void print(void) const throw(EmptyStackException, NotPrintableException);
 };
 
 #endif
