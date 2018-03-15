@@ -46,10 +46,14 @@ INC_DIR =	includes
 
 # sources
 SRC_NAME =	Operand.tpp\
-			OperandFactory.cpp
+			OperandFactory.cpp\
+			AbstractStack.cpp\
+			Lexer.cpp\
+			Parser.cpp
 
 # objects
 OBJ_NAME =		$(SRC_NAME:.cpp=.o)
+
 
 #paths
 SRC =		$(SRC_NAME)
