@@ -16,7 +16,7 @@
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
-Lexer::Lexer(void) {
+Lexer::Lexer(void) { // ^(((((push|assert) )(((int8|int16|int32)\([0-9]+\))|((float|double)\([0-9]+(\.[0-9]+)?\)))|pop|dump|add|sub|mul|div|mod|print|exit)?(;([[:graph:]]|[[:blank:]])*)?)|;;)$ GETS ALL EXCEPT EMPTY LINES
     //std::cout << "An instance of Lexer has been created" << std::endl;
 }
 
@@ -53,7 +53,7 @@ Lexer &Lexer::operator=(Lexer const &rhs) {
 /******************************************************************************
  * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
  ******************************************************************************/
-std::ostream &operator<<(std::ostream &o, Lexer const &i) {
+std::ostream &operator<<(std::ostream &o, Lexer const &i) {
     o << "no attributes" << std::endl;
     return o;
 }
