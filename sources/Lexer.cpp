@@ -16,8 +16,8 @@
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
-Lexer::Lexer(void) { // ^(((((push|assert) )(((int8|int16|int32)\([0-9]+\))|((float|double)\([0-9]+(\.[0-9]+)?\)))|pop|dump|add|sub|mul|div|mod|print|exit)?(;([[:graph:]]|[[:blank:]])*)?)|;;)$ GETS ALL EXCEPT EMPTY LINES
-    //std::cout << "An instance of Lexer has been created" << std::endl;
+Lexer::Lexer(void) { // ^(((((push|assert) )(((int8|int16|int32)\([0-9]+\))|((float|double)\([0-9]+(\.[0-9]+)?\)))|pop|dump|add|sub|mul|div|mod|print|exit)?(;([[:graph:]]|[[:blank:]])*)?)|;;)(?<!^)$
+    // std::cout << "An instance of Lexer has been created" << std::endl;
 }
 
 Lexer::Lexer(Lexer const &src) {
@@ -61,6 +61,7 @@ std::ostream &operator<<(std::ostream &o, Lexer const &i) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
+const std::string Lexer::_commands = ["push", "pop", ""];
 
 /*******************************************************************************
  * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions *

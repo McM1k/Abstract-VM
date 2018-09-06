@@ -14,6 +14,7 @@
 # define LEXER_HPP
 
 # include <iostream>
+# include <string>
 
 class Lexer {
 public:
@@ -25,6 +26,7 @@ public:
 
     Lexer &operator=(Lexer const &rhs); //equals
 
+    static const std::string _commands;
 
 private:
 
