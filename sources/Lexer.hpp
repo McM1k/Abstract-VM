@@ -26,6 +26,9 @@ public:
 
     Lexer &operator=(Lexer const &rhs); //equals
 
+    //TODO
+    std::string * splitLines(std::string raw);
+
     static const std::string _commands;
     static const std::string _types;
 
