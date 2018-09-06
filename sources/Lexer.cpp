@@ -61,7 +61,8 @@ std::ostream &operator<<(std::ostream &o, Lexer const &i) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
-const std::string Lexer::_commands = ["push", "pop", ""];
+const std::string Lexer::_commands["push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit"];
+const std::string Lexer::_types["int8", "int16", "int32", "float", "double"];
 
 /*******************************************************************************
  * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions *

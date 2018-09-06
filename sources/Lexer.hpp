@@ -27,6 +27,7 @@ public:
     Lexer &operator=(Lexer const &rhs); //equals
 
     static const std::string _commands;
+    static const std::string _types;
 
 private:
 
