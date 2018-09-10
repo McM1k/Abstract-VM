@@ -18,6 +18,7 @@
  ****************************************************************************/
 Lexer::Lexer(void) { // ^(((((push|assert) )(((int8|int16|int32)\([0-9]+\))|((float|double)\([0-9]+(\.[0-9]+)?\)))|pop|dump|add|sub|mul|div|mod|print|exit)?(;([[:graph:]]|[[:blank:]])*)?)|;;)(?<!^)$
     // std::cout << "An instance of Lexer has been created" << std::endl;
+
 }
 
 Lexer::Lexer(Lexer const &src) {
@@ -63,6 +64,10 @@ std::ostream &operator<<(std::ostream &o, Lexer const &i) {
  *************************************************************************/
 const std::string Lexer::_commands["push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit"];
 const std::string Lexer::_types["int8", "int16", "int32", "float", "double"];
+
+std::string * Lexer::splitLines(std::string raw) {
+
+}
 
 /*******************************************************************************
  * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions *
