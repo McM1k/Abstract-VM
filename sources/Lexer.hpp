@@ -15,6 +15,7 @@
 
 # include <iostream>
 # include <string>
+# include <list>
 
 class Lexer {
 public:
@@ -23,8 +24,8 @@ public:
     virtual ~Lexer(void);
     Lexer &operator=(Lexer const &rhs); //equals
 
-    //TODO
-    std::string * splitLines(std::string raw);
+    //TODO : output list of strings, create that list, add it in .hpp, etc
+        * splitLines(iostream::istream is);
 
     static const std::string *_commands;
     static const std::string *_types;
