@@ -24,12 +24,16 @@ public:
     virtual ~Lexer(void);
     Lexer &operator=(Lexer const &rhs); //equals
 
-    //TODO : output list of strings, create that list, add it in .hpp, etc
-    std::list<std::string> *splitLines(iostream::istream is);
+    splitTokens(std::list<std::string> lines);
+    std::list<std::string> splitLines(iostream::istream is);
 
     static const std::string *commands;
     static const std::string *types;
 
+    //TODO : use this enum, find a way to couple it with the tokens
+    // (do i get a single list of structs composed with a token and an enum value
+    // or two distincts lists with splitTokens?)
+    enum class eTokenType {Command, Type, Value, Comment};
 private:
     std::list<std::string> _lines;
 

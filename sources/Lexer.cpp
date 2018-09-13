@@ -65,11 +65,7 @@ std::ostream &operator<<(std::ostream &o, Lexer const &i) {
 const std::string Lexer::commands["push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit"];
 const std::string Lexer::types["int8", "int16", "int32", "float", "double"];
 
-/*
- * is   : input stream
- * ostr : output string
- */
-std::string * Lexer::splitLines(std::string is) {
+std::list<std::string> Lexer::splitLines(std::string is) {
     std::string str;
     std::list<std::string> lines;
 
