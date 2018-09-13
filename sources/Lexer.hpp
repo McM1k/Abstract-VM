@@ -25,12 +25,13 @@ public:
     Lexer &operator=(Lexer const &rhs); //equals
 
     //TODO : output list of strings, create that list, add it in .hpp, etc
-        * splitLines(iostream::istream is);
+    std::list<std::string> *splitLines(iostream::istream is);
 
-    static const std::string *_commands;
-    static const std::string *_types;
+    static const std::string *commands;
+    static const std::string *types;
 
 private:
+    std::list<std::string> _lines;
 
 };
 
