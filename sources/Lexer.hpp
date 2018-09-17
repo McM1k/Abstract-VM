@@ -16,6 +16,7 @@
 # include <iostream>
 # include <string>
 # include <list>
+# include "Token.hpp"
 
 class Lexer {
 public:
@@ -26,16 +27,14 @@ public:
 
     splitTokens(std::list<std::string> lines);
     std::list<std::string> splitLines(iostream::istream is);
+    std::list<Token> TokenizeLine(std::string str);
 
-    static const std::string *commands;
-    static const std::string *types;
+//    static const std::string *commands;
+//    static const std::string *types;
 
-    //TODO : use this enum, find a way to couple it with the tokens
-    // (do i get a single list of structs composed with a token and an enum value
-    // or two distincts lists with splitTokens?)
-    enum class eTokenType {Command, Type, Value, Comment};
 private:
     std::list<std::string> _lines;
+    std::list<Token> _tokens;
 
 };
 
