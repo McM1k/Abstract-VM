@@ -65,42 +65,82 @@ std::ostream &operator<<(std::ostream &o, Lexer const &i) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
+
 // COMMAND     const std::string Lexer::commands["push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit"];
-//^(push|assert|pop|dump|print|add|sub|mul|div|mod|exit|;;)
+//^(push|assert|pop|dump|print|add|sub|mul|div|mod|exit)
+
+// SEPARATOR
+//^
 
 // TYPE        const std::string Lexer::types["int8", "int16", "int32", "float", "double"];
-// (int8|int16|int32|float|double)
+//^(int8|int16|int32|float|double)
 
 // VALUE
-//\(([0-9])+(\.([0-9])+)?\)
+//^([0-9])+(\.([0-9])+)?
+
+// OPENBRACKET
+//^(
+
+// CLOSEBRACKET
+//^)
 
 //COMMENT
-//;|$
+//;([[:print:]])*
 
-std::list<std::string> Lexer::splitLines(std::string is) {
-    std::string str;
-    std::list<std::string> lines;
+Token Lexer::findComment(std::string s) {
+    std::smatch sm;
+    std::regex rgx(";([[:print:]])*");
 
-    while(getline(is, str){
-        lines.push_back(str);
-    }
-
-//    this->_lines = lines;
-    return lines;
+    std::regex_search(s, sm, rgx);
+    return Token(sm[0], Token::eTokenType::comment);
 }
 
-std::list<Token> Lexer::TokenizeLine(std::string str) {
-    std::list<Token> tokens;
+Token Lexer::findSeparator(std::string s) {
+    std::smatch sm;
+    std::regex rgx("^ ");
 
-    if (std::regex_match(str,"^(push|assert|pop|dump|print|add|sub|mul|div|mod|exit|;;)")){
-        //TODO : do stuff
+    std::regex_search(s, sm, rgx);
+    return Token(sm[0], Token::eTokenType::separator);
+}
 
-        str.erase(0, token.content.size());
-    }
-    else{
-        //TODO : throw an exception
-    }
-    return tokens;
+Token Lexer::findOpenBracket(std::string s) {
+    std::smatch sm;
+    std::regex rgx("^\\(");
+
+    std::regex_search(s, sm, rgx);
+    return Token(sm[0], Token::eTokenType::openBracket);
+}
+
+Token Lexer::findCloseBracket(std::string s) {
+    std::smatch sm;
+    std::regex rgx("^\\)");
+
+    std::regex_search(s, sm, rgx);
+    return Token(sm[0], Token::eTokenType::closeBracket);
+}
+
+Token Lexer::findCommand(std::string s) {
+    std::smatch sm;
+    std::regex rgx("^(push|assert|pop|dump|print|add|sub|mul|div|mod|exit)");
+
+    std::regex_search(s, sm, rgx);
+    return Token(sm[0], Token::eTokenType::command);
+}
+
+Token Lexer::findType(std::string s) {
+    std::smatch sm;
+    std::regex rgx("^(int8|int16|int32|float|double)");
+
+    std::regex_search(s, sm, rgx);
+    return Token(sm[0], Token::eTokenType::type);
+}
+
+Token Lexer::findValue(std::string s) {
+    std::smatch sm;
+    std::regex rgx("^([0-9])+(\\.([0-9])+)?");
+
+    std::regex_search(s, sm, rgx);
+    return Token(sm[0], Token::eTokenType::value);
 }
 
 /*******************************************************************************

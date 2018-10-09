@@ -20,7 +20,7 @@ public:
     void setContent(std::string content);
     void setType(eTokenType type);
 
-    enum class eTokenType {Command, Type, Value, Comment};
+    enum class eTokenType {command, separator, type, value, openBracket, closeBracket, comment};
 
 private:
     std::string _content;

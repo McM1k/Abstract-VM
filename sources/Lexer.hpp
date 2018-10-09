@@ -24,17 +24,19 @@ public:
     Lexer(Lexer const &src);
     virtual ~Lexer(void);
     Lexer &operator=(Lexer const &rhs); //equals
-
-    splitTokens(std::list<std::string> lines);
-    std::list<std::string> splitLines(iostream::istream is);
-    std::list<Token> TokenizeLine(std::string str);
+//TODO excetpions
+    Token findComment(std::string s);
+    Token findCommand(std::string s);
+    Token findType(std::string s);
+    Token findValue(std::string s);
+    Token findSeparator(std::string s);
+    Token findOpenBracket(std::string s);
+    Token findCloseBracket(std::string s);
 
 //    static const std::string *commands;
 //    static const std::string *types;
 
 private:
-    std::list<std::string> _lines;
-    std::list<Token> _tokens;
 
 };
 

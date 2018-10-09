@@ -18,6 +18,7 @@
  ****************************************************************************/
 Parser::Parser(void) {
     //std::cout << "An instance of Parser has been created" << std::endl;
+    //TODO cosntruct map with tokens and corresponding keywords
 }
 
 Parser::Parser(Parser const &src) {
@@ -61,6 +62,21 @@ std::ostream &operator<<(std::ostream &o, Parser const &i) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
+std::list<std::string> Parser::splitLines(iostream::istream is) {
+    std::string str;
+    std::list<std::string> lines;
+
+    while(getline(is, str)){
+        lines.push_back(str);
+    }
+
+    lines = this->_lines;
+    return lines;
+}
+
+void Parser::executeNextLine(std::list <string> lines) {
+
+}
 
 /*******************************************************************************
  * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions *
