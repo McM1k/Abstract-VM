@@ -27,7 +27,7 @@ public:
 
 private:
 
-	std::array _creator;
+	std::array<ftAddrCreate , 5> _creator;
 
 	IOperand const * createInt8( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
 	IOperand const * createInt16( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);

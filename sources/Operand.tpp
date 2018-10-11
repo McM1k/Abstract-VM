@@ -24,8 +24,8 @@ public:
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
-	Operand(T value, T min, T max) :
-			_type(T),// may not compile
+	Operand(T value, T min, T max, eOperandType type) :
+			_type(type),// may not compile
 			_precision(static_cast<int>(type)), //cast could nest compiling errors
 			_min(min),
 			_max(max)
@@ -128,16 +128,16 @@ public:
 
 	IOperand const * operator-( IOperand const & rhs ) const throw(OverFlowException, UnderFlowException){
 		if (rhs.getPrecision() > this->getPrecision()) {
-			if ((this->getValue() + rhs.getValue()) > rhs.getMax())
+			if ((- this->getValue() + rhs.getValue()) > rhs.getMax())
 				throw (OverFlowException);
-			else if ((this->getValue() + rhs.getValue()) < rhs.getMin())
+			else if ((- this->getValue() + rhs.getValue()) < rhs.getMin())
 				throw (UnderFlowException);
 			else
 				Operand operand<rhs.getType()>(this->getValue() - rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 		} else {
-			if ((this->getValue() + rhs.getValue()) > this->_max())
+			if ((this->getValue() - rhs.getValue()) > this->_max())
 				throw (OverFlowException);
-			else if ((this->getValue() + rhs.getValue()) < this->_min())
+			else if ((this->getValue() - rhs.getValue()) < this->_min())
 				throw (UnderFlowException);
 			else
 				Operand operand<this->getType()>(this->getValue() - rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
@@ -146,16 +146,16 @@ public:
 
 	IOperand const * operator*( IOperand const & rhs ) const throw(OverFlowException, UnderFlowException){
 		if (rhs.getPrecision() > this->getPrecision()) {
-			if ((this->getValue() + rhs.getValue()) > rhs.getMax())
+			if ((this->getValue() * rhs.getValue()) > rhs.getMax())
 				throw (OverFlowException);
-			else if ((this->getValue() + rhs.getValue()) < rhs.getMin())
+			else if ((this->getValue() * rhs.getValue()) < rhs.getMin())//TODO : repair all this so i dont get an overflow if i try to mul int8(127) * int8(127)
 				throw (UnderFlowException);
 			else
 				Operand operand<rhs.getType()>(this->getValue() * rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 		} else {
-			if ((this->getValue() + rhs.getValue()) > this->_max())
+			if ((this->getValue() * rhs.getValue()) > this->_max())
 				throw (OverFlowException);
-			else if ((this->getValue() + rhs.getValue()) < this->_min())
+			else if ((this->getValue() * rhs.getValue()) < this->_min())
 				throw (UnderFlowException);
 			else
 				Operand operand<this->getType()>(this->getValue() * rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION

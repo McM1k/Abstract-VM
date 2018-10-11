@@ -74,7 +74,9 @@ std::list<std::string> Parser::splitLines(iostream::istream is) {
     return lines;
 }
 
-void Parser::executeNextLine(std::list <string> lines) {
+void Parser::executeNextLine(std::list<std::string> lines) {
+    std::string line = lines.front();
+
 
 }
 

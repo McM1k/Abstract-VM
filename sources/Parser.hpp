@@ -28,6 +28,7 @@ public:
     void executeNextLine(std::list<std::string> lines); //TODO throws stuff
     //TODO function that reads while theres still lines
 
+    //TODO exceptions syntax error, missing exit
 private:
     std::list<std::string> _lines;
     //TODO map<string, funct>

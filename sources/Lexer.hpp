@@ -24,7 +24,7 @@ public:
     Lexer(Lexer const &src);
     virtual ~Lexer(void);
     Lexer &operator=(Lexer const &rhs); //equals
-//TODO excetpions
+//TODO excetpions : unknown instruction/type/broken value
     Token findComment(std::string s);
     Token findCommand(std::string s);
     Token findType(std::string s);
