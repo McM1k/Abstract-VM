@@ -25,13 +25,13 @@ public:
     virtual ~Lexer(void);
     Lexer &operator=(Lexer const &rhs); //equals
 //TODO excetpions : unknown instruction/type/broken value
-    Token findComment(std::string s);
-    Token findCommand(std::string s);
-    Token findType(std::string s);
-    Token findValue(std::string s);
-    Token findSeparator(std::string s);
-    Token findOpenBracket(std::string s);
-    Token findCloseBracket(std::string s);
+    Token static findComment(std::string s);
+    Token static findCommand(std::string s);
+    Token static findType(std::string s);
+    Token static findValue(std::string s);
+    Token static findSeparator(std::string s);
+    Token static findOpenBracket(std::string s);
+    Token static findCloseBracket(std::string s);
 
 //    static const std::string *commands;
 //    static const std::string *types;

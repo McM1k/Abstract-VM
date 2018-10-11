@@ -54,7 +54,8 @@ void Token::setType(eTokenType type) {
  */
 Token &Token::operator=(Token const &rhs) {
     if (this != &rhs) {
-        //this->XXX = rhs.getXXX();
+        this->_content = rhs.getContent();
+        this->_type = rhs.getType();
     }
     return *this;
 }

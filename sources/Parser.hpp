@@ -25,7 +25,7 @@ public:
     Parser &operator=(Parser const &rhs); //equals
 
     std::list<std::string> splitLines(iostream::istream is);
-    void executeNextLine(std::list<std::string> lines); //TODO throws stuff
+    void executeNextLine(std::list<std::string> *lines); //TODO throws stuff
     //TODO function that reads while theres still lines
 
     //TODO exceptions syntax error, missing exit

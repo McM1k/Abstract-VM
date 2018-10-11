@@ -86,7 +86,7 @@ std::ostream &operator<<(std::ostream &o, Lexer const &i) {
 //COMMENT
 //;([[:print:]])*
 
-Token Lexer::findComment(std::string s) {
+Token static Lexer::findComment(std::string s) {
     std::smatch sm;
     std::regex rgx(";([[:print:]])*");
 
@@ -94,7 +94,7 @@ Token Lexer::findComment(std::string s) {
     return Token(sm[0], Token::eTokenType::comment);
 }
 
-Token Lexer::findSeparator(std::string s) {
+Token static Lexer::findSeparator(std::string s) {
     std::smatch sm;
     std::regex rgx("^ ");
 
@@ -102,7 +102,7 @@ Token Lexer::findSeparator(std::string s) {
     return Token(sm[0], Token::eTokenType::separator);
 }
 
-Token Lexer::findOpenBracket(std::string s) {
+Token static Lexer::findOpenBracket(std::string s) {
     std::smatch sm;
     std::regex rgx("^\\(");
 
@@ -110,7 +110,7 @@ Token Lexer::findOpenBracket(std::string s) {
     return Token(sm[0], Token::eTokenType::openBracket);
 }
 
-Token Lexer::findCloseBracket(std::string s) {
+Token static Lexer::findCloseBracket(std::string s) {
     std::smatch sm;
     std::regex rgx("^\\)");
 
@@ -118,28 +118,32 @@ Token Lexer::findCloseBracket(std::string s) {
     return Token(sm[0], Token::eTokenType::closeBracket);
 }
 
-Token Lexer::findCommand(std::string s) {
+Token static Lexer::findCommand(std::string s) {
     std::smatch sm;
     std::regex rgx("^(push|assert|pop|dump|print|add|sub|mul|div|mod|exit)");
 
     std::regex_search(s, sm, rgx);
     return Token(sm[0], Token::eTokenType::command);
+    //TODO throw if unrecognised
 }
 
-Token Lexer::findType(std::string s) {
+Token static Lexer::findType(std::string s) {
     std::smatch sm;
     std::regex rgx("^(int8|int16|int32|float|double)");
 
     std::regex_search(s, sm, rgx);
     return Token(sm[0], Token::eTokenType::type);
+    //TODO throw if unrecognised
+
 }
 
-Token Lexer::findValue(std::string s) {
+Token static Lexer::findValue(std::string s) {
     std::smatch sm;
     std::regex rgx("^([0-9])+(\\.([0-9])+)?");
 
     std::regex_search(s, sm, rgx);
     return Token(sm[0], Token::eTokenType::value);
+    //TODO throw if unrecognised
 }
 
 /*******************************************************************************

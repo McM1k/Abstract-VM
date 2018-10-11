@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "Parser.hpp"
+#include "Token.hpp"
+#include "Lexer.hpp"
 #include <iostream>
 
 /****************************************************************************
@@ -74,10 +76,46 @@ std::list<std::string> Parser::splitLines(iostream::istream is) {
     return lines;
 }
 
-void Parser::executeNextLine(std::list<std::string> lines) {
-    std::string line = lines.front();
+void Parser::executeNextLine(std::list<std::string> *lines) {
+    std::string line = lines->front();
+    Token throwableTk;
+    Token commandTk;
+    Token typeTk;
+    Token valueTk;
 
+    throwableTk = Lexer::findComment(line);
+    size_t pos = line.find(throwableTk.getContent());
+    line.erase(pos, throwableTk.getContent().length());
+    if (line.length()){
+        lines->pop_front();
+        return;
+    }
 
+    commandTk = Lexer::findCommand(line);
+    line.erase(0, commandTk.getContent().length());
+
+    throwableTk = Lexer::findSeparator(line);
+    line.erase(0, 1);//faster than getting length
+    //TODO throw if syntax error
+
+    typeTk = Lexer::findType(line);
+    line.erase(0, typeTk.getContent().length());
+
+    throwableTk = Lexer::findOpenBracket(line);
+    line.erase(0, 1);
+    //TODO throw if syntax error
+
+    valueTk = Lexer::findValue(line);
+    line.erase(0, valueTk.getContent().length());
+
+    throwableTk = Lexer::findCloseBracket(line);
+    line.erase(0, 1);
+    //TODO throw if syntax error
+
+    if (line.length()){
+        //TODO throw syntax error
+    }
+    //TODO exec part
 }
 
 /*******************************************************************************
