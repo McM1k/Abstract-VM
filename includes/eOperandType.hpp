@@ -13,6 +13,6 @@
 #ifndef EOPERANDTYPE_HPP
 # define EOPERANDTYPE_HPP
 
-enum class eOperandType {Int8, Int16, Int32, Float, Double};
+typedef enum {Int8, Int16, Int32, Float, Double} eOperandType;
 
 #endif

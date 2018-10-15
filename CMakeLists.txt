@@ -5,6 +5,6 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(sourceCode sources/OperandFactory.cpp sources/Lexer.cpp sources/Parser.cpp sources/Token.cpp sources/AbstractStack.cpp sources/Operand.tpp)
 
-set(HEADER_FILES sources/OperandFactory.hpp sources/Lexer.hpp sources/Parser.hpp sources/Token.hpp sources/AbstractStack.hpp sources/IOperand.hpp sources/eOperandType.hpp)
+set(HEADER_FILES includes/OperandFactory.hpp includes/Lexer.hpp includes/Parser.hpp includes/Token.hpp includes/AbstractStack.hpp includes/IOperand.hpp includes/eOperandType.hpp)
 
 add_executable(abstract_vm ${HEADER_FILES} sources/main.cpp ${sourceCode})

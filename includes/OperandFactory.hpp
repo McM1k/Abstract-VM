@@ -12,31 +12,33 @@
 
 #ifndef OPERANDFACTORY_HPP
 # define OPERANDFACTORY_HPP
-# include "Operand.tpp"
+# include "../sources/Operand.tpp"
+# include "../exceptions/OperandExceptions.epp"
 # include <iostream>
 # include <array>
 
-typedef IOperand const *(*ftAddrCreate) (std::string const & value);
 
 class OperandFactory {
 public:
 	OperandFactory(void);
-	virtual ~OperandFactory(void);
+	virtual ~OperandFactory(void) = default;
 
 	IOperand const * createOperand( eOperandType type, std::string const & value ) const;
+
+    typedef IOperand const *(OperandFactory::*ftAddrCreate) (std::string const & value) const;
 
 private:
 
 	std::array<ftAddrCreate , 5> _creator;
 
-	IOperand const * createInt8( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
-	IOperand const * createInt16( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
-	IOperand const * createInt32( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
-	IOperand const * createFloat( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
-	IOperand const * createDouble( std::string const & value ) const throw(Operand::OverFlowException, Operand::UnderFlowException);
+	IOperand const * createInt8( std::string const & value ) const;
+	IOperand const * createInt16( std::string const & value ) const;
+	IOperand const * createInt32( std::string const & value ) const;
+	IOperand const * createFloat( std::string const & value ) const;
+	IOperand const * createDouble( std::string const & value ) const;
 
-	OperandFactory(OperandFactory const &src);
-	OperandFactory &operator=(OperandFactory const &rhs); //equals
+	OperandFactory(OperandFactory const &src) = default;
+	OperandFactory &operator=(OperandFactory const &rhs) = default; //equals
 };
 
 #endif

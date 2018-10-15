@@ -1,5 +1,5 @@
 
-#include "Token.hpp"
+#include "../includes/Token.hpp"
 #include <iostream>
 
 /*
@@ -14,7 +14,7 @@ Token::Token(Token const &src) {
     *this = src;
 }
 
-Token::Token(std::string content, eTokenType type) : _content(content), _type(type) {
+Token::Token(std::string content, int type) : _content(content), _type(type) {
 
 }
 

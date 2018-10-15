@@ -12,7 +12,7 @@ public:
     virtual ~Token(void);
     Token &operator=(Token const &rhs); //equals
 
-    Token(std::string content, eTokenType type);
+    Token(std::string content, int type);
 
     std::string getContent() const;
     eTokenType getType() const;
@@ -20,7 +20,7 @@ public:
     void setContent(std::string content);
     void setType(eTokenType type);
 
-    enum class eTokenType {command, separator, type, value, openBracket, closeBracket, comment};
+    typedef enum {command, separator, type, value, openBracket, closeBracket, comment} eTokenType;
 
 private:
     std::string _content;

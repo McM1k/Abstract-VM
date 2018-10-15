@@ -13,8 +13,9 @@
 #ifndef OPERAND_TPP
 # define OPERAND_TPP
 
-# include "IOperand.hpp"
-# include "eOperandType.hpp"
+# include "../includes/IOperand.hpp"
+# include "../includes/eOperandType.hpp"
+# include "../exceptions/OperandExceptions.epp"
 # include <iostream>
 # include <sstream>
 
@@ -108,127 +109,107 @@ public:
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
-	IOperand const * operator+( IOperand const & rhs ) const throw(OverFlowException, UnderFlowException){
+	IOperand const * operator+( IOperand const & rhs ) const{
 		if (rhs.getPrecision() > this->getPrecision()) {
 			if ((this->getValue() + rhs.getValue()) > rhs.getMax())
-				throw (OverFlowException);
+				throw OverFlowException();
 			else if ((this->getValue() + rhs.getValue()) < rhs.getMin())
-				throw (UnderFlowException);
+				throw UnderFlowException();
 			else
 				Operand operand<rhs.getType()>(this->getValue() + rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION //TODO: create obj using builder
 		} else {
 			if ((this->getValue() + rhs.getValue()) > this->_max())
-				throw (OverFlowException);
+				throw OverFlowException();
 			else if ((this->getValue() + rhs.getValue()) < this->_min())
-				throw (UnderFlowException);
+				throw UnderFlowException();
 			else
 				Operand operand<this->getType()>(this->getValue() + rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 		}
 	}
 
-	IOperand const * operator-( IOperand const & rhs ) const throw(OverFlowException, UnderFlowException){
+	IOperand const * operator-( IOperand const & rhs ) const{
 		if (rhs.getPrecision() > this->getPrecision()) {
 			if ((- this->getValue() + rhs.getValue()) > rhs.getMax())
-				throw (OverFlowException);
+				throw OverFlowException();
 			else if ((- this->getValue() + rhs.getValue()) < rhs.getMin())
-				throw (UnderFlowException);
+				throw UnderFlowException();
 			else
 				Operand operand<rhs.getType()>(this->getValue() - rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 		} else {
 			if ((this->getValue() - rhs.getValue()) > this->_max())
-				throw (OverFlowException);
+				throw OverFlowException();
 			else if ((this->getValue() - rhs.getValue()) < this->_min())
-				throw (UnderFlowException);
+				throw UnderFlowException();
 			else
 				Operand operand<this->getType()>(this->getValue() - rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 		}
 	}
 
-	IOperand const * operator*( IOperand const & rhs ) const throw(OverFlowException, UnderFlowException){
+	IOperand const * operator*( IOperand const & rhs ) const{
 		if (rhs.getPrecision() > this->getPrecision()) {
 			if ((this->getValue() * rhs.getValue()) > rhs.getMax())
-				throw (OverFlowException);
+				throw OverFlowException();
 			else if ((this->getValue() * rhs.getValue()) < rhs.getMin())//TODO : repair all this so i dont get an overflow if i try to mul int8(127) * int8(127)
-				throw (UnderFlowException);
+				throw UnderFlowException();
 			else
 				Operand operand<rhs.getType()>(this->getValue() * rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 		} else {
 			if ((this->getValue() * rhs.getValue()) > this->_max())
-				throw (OverFlowException);
+				throw OverFlowException();
 			else if ((this->getValue() * rhs.getValue()) < this->_min())
-				throw (UnderFlowException);
+				throw UnderFlowException();
 			else
 				Operand operand<this->getType()>(this->getValue() * rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 		}
 	}
 
-	IOperand const * operator/( IOperand const & rhs ) const throw(OverFlowException, UnderFlowException, DivideByZeroException){
+	IOperand const * operator/( IOperand const & rhs ) const{
 		if (rhs.getValue() == 0)
-			throw(DivideByZeroException);
+			throwDivideByZeroException();
 		else {
 			if (rhs.getPrecision() > this->getPrecision()) {
 				if ((this->getValue() + rhs.getValue()) > rhs.getMax())
-					throw (OverFlowException);
+					throw OverFlowException();
 				else if ((this->getValue() + rhs.getValue()) < rhs.getMin())
-					throw (UnderFlowException);
+					throw UnderFlowException();
 				else
 					Operand operand<rhs.getType()>(this->getValue() / rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 			} else {
 				if ((this->getValue() + rhs.getValue()) > this->_max())
-					throw (OverFlowException);
+					throw OverFlowException();
 				else if ((this->getValue() + rhs.getValue()) < this->_min())
-					throw (UnderFlowException);
+					throw UnderFlowException();
 				else
 					Operand operand<this->getType()>(this->getValue() / rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 			}
 		}
 	}
 
-	IOperand const * operator%( IOperand const & rhs ) const throw(OverFlowException, UnderFlowException, DivideByZeroException) {
+	IOperand const * operator%( IOperand const & rhs ) const{
 		if (rhs.getValue() == 0)
-			throw (DivideByZeroException);
+			throw DivideByZeroException();
 		else {
 			if (rhs.getPrecision() > this->getPrecision()) {
 				if ((this->getValue() + rhs.getValue()) > rhs.getMax())
-					throw (OverFlowException);
+					throw OverFlowException();
 				else if ((this->getValue() + rhs.getValue()) < rhs.getMin())
-					throw (UnderFlowException);
+					throw UnderFlowException();
 				else
-					Operand operand<rhs.getType()>(this->getValue() % rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+					Operand operand<rhs.getType()>(
+							this->getValue() % rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 			} else {
 				if ((this->getValue() + rhs.getValue()) > this->_max())
-					throw (OverFlowException);
+					throw OverFlowException();
 				else if ((this->getValue() + rhs.getValue()) < this->_min())
-					throw (UnderFlowException);
+					throw UnderFlowException();
 				else
-					Operand operand<this->getType()>(this->getValue() % rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+					Operand operand<this->getType()>(
+							this->getValue() % rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
 			}
 		}
 	}
 
-/*******************************************************************************
- * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions *
- *******************************************************************************/
-	class OverFlowException : public std::exception {
-	public :
-		virtual const char *what() const throw(){
-			return "Overflowing resulting operand";
-		}
-	};
-
-	class UnderFlowException : public std::exception {
-	public :
-		virtual const char *what() const throw(){
-			return "Underflowing resulting operand";
-		}
-	};
-
-	class DivideByZeroException : public std::exception {
-	public :
-		virtual const char *what() const throw(){
-			return "Dividing by zero";
-		}
-	};
+	// TODO : ==
 
 private:
 	int				const _precision;
