@@ -27,13 +27,13 @@ public:
     virtual ~AbstractStack(void);
     AbstractStack &operator=(AbstractStack const &rhs);
 
-    std::stack<IOperand*> getStack(void) const;
+    std::stack<IOperand const *> getStack(void) const;
 
 
 private:
-    std::stack<IOperand*> _stack;
+    std::stack<IOperand const *> _stack;
 
-    void push(IOperand * value);
+    void push(IOperand const * value);
     void pop(void);
     void dump(void);
     void assert(IOperand * value) const;

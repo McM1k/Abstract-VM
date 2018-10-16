@@ -82,14 +82,14 @@ public:
 /*************************************************************************
  * Operators * Operators * Operators * Operators * Operators * Operators *
  *************************************************************************/
-	IOperand &operator=(T const &rhs){
+	IOperand &operator=(Operand<T> const &rhs){
 		if (this != &rhs) {
 			this->_value = rhs.getValue();
 		}
 		return *this;
 	}
 
-    bool &operator==(T const &rhs){
+    bool operator==(Operand<T> const &rhs){
         if (this->_value == rhs.getValue())
             return true;
         return false;
@@ -110,6 +110,8 @@ public:
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
 	IOperand const * operator+( IOperand const & rhs ) const{
+		// TODO tout refaire lol
+
 		if (rhs.getPrecision() > this->getPrecision()) {
 			if ((this->getValue() + rhs.getValue()) > rhs.getMax())
 				throw OverFlowException();
@@ -128,6 +130,10 @@ public:
 	}
 
 	IOperand const * operator-( IOperand const & rhs ) const{
+
+
+
+
 		if (rhs.getPrecision() > this->getPrecision()) {
 			if ((- this->getValue() + rhs.getValue()) > rhs.getMax())
 				throw OverFlowException();
@@ -165,7 +171,7 @@ public:
 
 	IOperand const * operator/( IOperand const & rhs ) const{
 		if (rhs.getValue() == 0)
-			throwDivideByZeroException();
+			throw DivideByZeroException();
 		else {
 			if (rhs.getPrecision() > this->getPrecision()) {
 				if ((this->getValue() + rhs.getValue()) > rhs.getMax())
@@ -209,7 +215,13 @@ public:
 		}
 	}
 
-	// TODO : ==
+	bool operator==(IOperand const & rhs) const{
+	    if ((this->_type == rhs.getType()) &&
+	        (this->_value == rhs.getValue())){
+	        return true;
+	    }
+	    return false;
+	}
 
 private:
 	int				const _precision;

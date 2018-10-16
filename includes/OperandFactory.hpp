@@ -12,7 +12,7 @@
 
 #ifndef OPERANDFACTORY_HPP
 # define OPERANDFACTORY_HPP
-# include "../sources/Operand.tpp"
+# include "../sources/Operand.hpp"
 # include "../exceptions/OperandExceptions.epp"
 # include <iostream>
 # include <array>

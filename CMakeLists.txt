@@ -3,7 +3,7 @@ project(abstract_vm_GH)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(sourceCode sources/OperandFactory.cpp sources/Lexer.cpp sources/Parser.cpp sources/Token.cpp sources/AbstractStack.cpp sources/Operand.tpp)
+set(sourceCode sources/OperandFactory.cpp sources/Lexer.cpp sources/Parser.cpp sources/Token.cpp sources/AbstractStack.cpp sources/Operand.hpp)
 
 set(HEADER_FILES includes/OperandFactory.hpp includes/Lexer.hpp includes/Parser.hpp includes/Token.hpp includes/AbstractStack.hpp includes/IOperand.hpp includes/eOperandType.hpp)
 

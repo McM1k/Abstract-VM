@@ -12,6 +12,7 @@
 
 #ifndef IOPERAND_HPP
 #define IOPERAND_HPP
+#include <string>
 
 class IOperand {
 
@@ -29,7 +30,6 @@ public:
 	virtual std::string const & toString( void ) const = 0; // String representation of the instance
 
 	virtual ~IOperand( void ) {}
-
 };
 
 #endif

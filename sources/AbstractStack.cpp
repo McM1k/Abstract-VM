@@ -30,7 +30,7 @@ AbstractStack::~AbstractStack(void) {}
 /***********************************************************************
  * Getters * Getters * Getters * Getters * Getters * Getters * Getters *
  ***********************************************************************/
-std::stack<IOperand*> AbstractStack::getStack() const {
+std::stack<IOperand const *> AbstractStack::getStack() const {
     return this->_stack;
 }
 
@@ -55,15 +55,17 @@ AbstractStack &AbstractStack::operator=(AbstractStack const &rhs) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
-void AbstractStack::push(IOperand *value) {
+void AbstractStack::push(IOperand const * value) {
     this->_stack.push(value);
 }
 
 void AbstractStack::pop(){
     if (this->_stack.empty())
         throw EmptyStackException();
-    else
+    else {
+        delete this->_stack.top();
         this->_stack.pop();
+    }
 }
 
 void AbstractStack::dump() {
@@ -78,10 +80,10 @@ void AbstractStack::dump() {
     std::cout << ss.str();
 }
 
-void AbstractStack::assert(IOperand *value) const{
+void AbstractStack::assert(IOperand * value) const{
     if (this->_stack.empty())
         throw EmptyStackException();
-    else if (!(*(this->_stack.top()) == *value))
+    else if (!(this->_stack.top()->toString() == value->toString()))
         throw AssertFailException();
 }
 
@@ -89,12 +91,12 @@ void AbstractStack::add(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand a = this->_stack.top();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
-        IOperand b = this->_stack.top();
+        IOperand const * b = this->_stack.top();
         this->_stack.pop();
 
-        push(a + b);
+        push(*a + *b);
     }
 }
 
@@ -102,12 +104,12 @@ void AbstractStack::sub(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand a = this->_stack.top();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
-        IOperand b = this->_stack.top();
+        IOperand const * b = this->_stack.top();
         this->_stack.pop();
 
-        push(a - b);
+        push(*a - *b);
     }
 }
 
@@ -115,12 +117,12 @@ void AbstractStack::mul(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand a = this->_stack.top();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
-        IOperand b = this->_stack.top();
+        IOperand const * b = this->_stack.top();
         this->_stack.pop();
 
-        push(a * b);
+        push(*a * *b);
     }
 }
 
@@ -128,17 +130,12 @@ void AbstractStack::div(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand a = this->_stack.top();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
-        IOperand b = this->_stack.top();
+        IOperand const * b = this->_stack.top();
         this->_stack.pop();
-        if (!b.getValue()){
-            push(b);
-            push(a);
-            throw DivByZeroException();
-        }
-        else
-            push(a / b);
+
+        push(*a / *b);
     }
 }
 
@@ -146,22 +143,18 @@ void AbstractStack::mod(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand a = this->_stack.top();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
-        IOperand b = this->_stack.top();
+        IOperand const * b = this->_stack.top();
         this->_stack.pop();
-        if (!b.getValue()){
-            push(b);
-            push(a);
-            throw DivByZeroException();
-        }
-        else if (a.getPrecision() > 2 || b.getPrecision() > 2){
+
+        if (a.getPrecision() > 2 || b.getPrecision() > 2){
             push(b);
             push(a);
             throw ModOnFloatException();
         }
         else
-            push(a % b);
+            push(*a % *b);
     }
 }
 
@@ -169,10 +162,10 @@ void AbstractStack::print() const{
     if (this->_stack.empty())
         throw EmptyStackException();
     else {
-        IOperand * myChar = this->_stack.top();
+        IOperand const * myChar = this->_stack.top();
         if (myChar->getType() != eOperandType::Int8)
             throw NotPrintableException();
         else
-            std::cout << atoi(myChar.getValue()) << std::endl;
+            std::cout << myChar->toString() << std::endl;
     }
 }
