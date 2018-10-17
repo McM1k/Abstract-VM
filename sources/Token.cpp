@@ -14,7 +14,7 @@ Token::Token(Token const &src) {
     *this = src;
 }
 
-Token::Token(std::string content, int type) : _content(content), _type(type) {
+Token::Token(std::string content, Token::eTokenType type) : _content(content), _type(type) {
 
 }
 
@@ -32,7 +32,7 @@ std::string Token::getContent() const {
     return this->_content;
 }
 
-eTokenType Token::getType() const {
+Token::eTokenType Token::getType() const {
     return this->_type;
 }
 

@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/Parser.hpp"
-#include "../includes/Token.hpp"
-#include "../includes/Lexer.hpp"
-#include <iostream>
 
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
@@ -64,7 +61,7 @@ std::ostream &operator<<(std::ostream &o, Parser const &i) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
-std::list<std::string> Parser::splitLines(std::iostream::istream is) {
+std::list<std::string> Parser::splitLines(std::istream is) {
     std::string str;
     std::list<std::string> lines;
 

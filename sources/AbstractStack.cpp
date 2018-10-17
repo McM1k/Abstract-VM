@@ -12,7 +12,6 @@
 
 #include "../includes/AbstractStack.hpp"
 #include "../exceptions/AbstractStackExceptions.epp"
-#include <iostream>
 
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
@@ -73,7 +72,7 @@ void AbstractStack::dump() {
     std::stringstream ss;
 
     while (!dumpedStack.getStack().empty()){
-        ss << dumpedStack.getStack().top()->getValue() << std::cout;
+        ss << dumpedStack.getStack().top()->toString() << std::endl;
         dumpedStack.getStack().pop();
     }
 

@@ -12,7 +12,8 @@
 
 #ifndef PARSER_HPP
 # define PARSER_HPP
-
+# include "../includes/Token.hpp"
+# include "../includes/Lexer.hpp"
 # include <iostream>
 # include <string>
 # include <list>
@@ -24,7 +25,7 @@ public:
     virtual ~Parser(void);
     Parser &operator=(Parser const &rhs);
 
-    std::list<std::string> splitLines(iostream::istream is);
+    std::list<std::string> splitLines(std::istream is);
     void executeNextLine(std::list<std::string> *lines); //TODO throws stuff
     //TODO function that reads while theres still lines
 

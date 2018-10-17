@@ -12,10 +12,11 @@
 
 #ifndef OPERANDFACTORY_HPP
 # define OPERANDFACTORY_HPP
-# include "../sources/Operand.hpp"
+# include "Operand.hpp"
 # include "../exceptions/OperandExceptions.epp"
 # include <iostream>
 # include <array>
+# include <limits>
 
 
 class OperandFactory {

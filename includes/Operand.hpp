@@ -13,8 +13,8 @@
 #ifndef OPERAND_TPP
 # define OPERAND_TPP
 
-# include "../includes/IOperand.hpp"
-# include "../includes/eOperandType.hpp"
+# include "IOperand.hpp"
+# include "eOperandType.hpp"
 # include "../exceptions/OperandExceptions.epp"
 # include <iostream>
 # include <sstream>
@@ -25,20 +25,16 @@ public:
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
-	Operand(T value, T min, T max, eOperandType type) :
+	Operand(T value, eOperandType type) :
 			_type(type),// may not compile
-			_precision(static_cast<int>(type)), //cast could nest compiling errors
-			_min(min),
-			_max(max)
+			_precision(static_cast<int>(type)) //cast could nest compiling errors
 			{
 				this->_value = value;
 	}
 
 	Operand(T const & src) :
 			_type(src.getType()),
-			_precision(src.getPrecision()),
-			_min(min),
-			_max(max)
+			_precision(src.getPrecision())
 			{
 				*this = src;
 	}
@@ -62,14 +58,6 @@ public:
 
 	T       		getValue( void ) const{
 		return this->_value;
-	}
-
-	T				getMin( void ) const{
-		return this->_min;
-	}
-
-	T				getMax( void ) const{
-		return this->_max;
 	}
 
 /***********************************************************************
@@ -226,11 +214,9 @@ public:
 private:
 	int				const _precision;
 	eOperandType	const _type;
-	T				const _min;
-	T				const _max;
 	T				_value;
 
-	Operand(void){}
+	Operand() = default;
 };
 
 #endif
