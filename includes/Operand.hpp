@@ -66,13 +66,13 @@ public:
  *************************************************************************/
 	IOperand &operator=(Operand<T> const &rhs){
 		if (this != &rhs) {
-			this->_value = rhs.getValue();
+			this->_value = std::stold(rhs.toString());
 		}
 		return *this;
 	}
 
     bool operator==(Operand<T> const &rhs){
-        if (this->_value == rhs.getValue())
+        if (this->_value == std::stold(rhs.toString()))
             return true;
         return false;
     }
@@ -92,7 +92,10 @@ public:
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
 	IOperand const * operator+( IOperand const & rhs ) const{
-		long double result = this->_value + std::stold(rhs.toString());
+        long double a = static_cast<long long>(this->_value);
+        long double b = static_cast<long long>(std::stold(rhs.toString()));
+
+		long double result = a + b;
 		eOperandType resultType;
 
         if (this->getPrecision() >= rhs.getPrecision()){
@@ -104,7 +107,10 @@ public:
 	}
 
 	IOperand const * operator-( IOperand const & rhs ) const{
-		long double result = this->_value - std::stold(rhs.toString());
+        long double a = static_cast<long long>(this->_value);
+        long double b = static_cast<long long>(std::stold(rhs.toString()));
+
+		long double result = a - b;
 		eOperandType resultType;
 
 		if (this->getPrecision() >= rhs.getPrecision()){
@@ -116,7 +122,10 @@ public:
 	}
 
 	IOperand const * operator*( IOperand const & rhs ) const{
-		long double result = this->_value * std::stold(rhs.toString());
+        long double a = static_cast<long long>(this->_value);
+        long double b = static_cast<long long>(std::stold(rhs.toString()));
+
+		long double result = a * b;
 		eOperandType resultType;
 
 		if (this->getPrecision() >= rhs.getPrecision()){
@@ -128,8 +137,8 @@ public:
 	}
 
 	IOperand const * operator/( IOperand const & rhs ) const{
-		long double a = this->_value;
-		long double b = std::stold(rhs.toString());
+		long double a = static_cast<long long>(this->_value);
+		long double b = static_cast<long long>(std::stold(rhs.toString()));
 		if (b == 0)
 			throw DivideByZeroException();
 
@@ -148,8 +157,8 @@ public:
 		if (this->getType() > eOperandType::Int32 || rhs.getType() > eOperandType::Int32)
 			throw ModOnFloatException();
 
-		long long a = this->_value;
-		long long b = std::stoll(rhs.toString());
+		long long a = static_cast<long long>(this->_value);
+		long long b = static_cast<long long>(std::stoll(rhs.toString()));
 		if (b == 0)
 			throw DivideByZeroException();
 

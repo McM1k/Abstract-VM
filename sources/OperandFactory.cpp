@@ -93,7 +93,7 @@ IOperand const* OperandFactory::createInt32(const std::string &value) const{
 }
 
 IOperand const* OperandFactory::createFloat(const std::string &value) const{
-	float min = std::numeric_limits<float>::min(), max = std::numeric_limits<float>::max();
+	float min = std::numeric_limits<float>::max() * - 1, max = std::numeric_limits<float>::max();
 	long double tmpValue = std::stold(value, nullptr);
 	if (tmpValue < min)
 		throw UnderFlowException();
@@ -106,7 +106,7 @@ IOperand const* OperandFactory::createFloat(const std::string &value) const{
 }
 
 IOperand const* OperandFactory::createDouble(const std::string &value) const{
-	double min = std::numeric_limits<double>::min(), max = std::numeric_limits<double>::max();
+	double min = std::numeric_limits<double>::max() * -1, max = std::numeric_limits<double>::max();
 	long double tmpValue = std::stold(value, nullptr);
 	if (tmpValue < min)
 		throw UnderFlowException();
