@@ -15,7 +15,9 @@
 
 # include "IOperand.hpp"
 # include "eOperandType.hpp"
+# include "../includes/OperandFactory.hpp"
 # include "../exceptions/OperandExceptions.epp"
+#include "OperandFactory.hpp"
 # include <iostream>
 # include <sstream>
 
@@ -99,6 +101,11 @@ public:
  *************************************************************************/
 	IOperand const * operator+( IOperand const & rhs ) const{
 		// TODO tout refaire lol
+        if (this->getPrecision() >= rhs.getPrecision()){
+
+        } else {
+
+        }
 
 		if (rhs.getPrecision() > this->getPrecision()) {
 			if ((this->getValue() + rhs.getValue()) > rhs.getMax())

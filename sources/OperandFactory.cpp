@@ -48,7 +48,7 @@ OperandFactory::OperandFactory(void) {
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
 IOperand const* OperandFactory::createOperand(eOperandType type, const std::string &value) const {
-    return (this->*_creator[type])(value);
+    return dynamic_cast<const IOperand *>((this->*_creator[type])(value));
 }
 
 IOperand const* OperandFactory::createInt8(const std::string &value) const{

@@ -147,7 +147,7 @@ void AbstractStack::mod(){
         IOperand const * b = this->_stack.top();
         this->_stack.pop();
 
-        if (a.getPrecision() > 2 || b.getPrecision() > 2){
+        if (a->getPrecision() > 2 || b->getPrecision() > 2){
             push(b);
             push(a);
             throw ModOnFloatException();
