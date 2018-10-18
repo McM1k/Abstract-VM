@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #include "../includes/OperandFactory.hpp"
-
+# include "../includes/Operand.hpp"
 
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
-OperandFactory::OperandFactory(void) {
+OperandFactory::OperandFactory() {
 	_creator[eOperandType::Int8] = &OperandFactory::createInt8;
 	_creator[eOperandType::Int16] = &OperandFactory::createInt16;
 	_creator[eOperandType::Int32] = &OperandFactory::createInt32;
@@ -48,7 +48,7 @@ OperandFactory::OperandFactory(void) {
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
 IOperand const* OperandFactory::createOperand(eOperandType type, const std::string &value) const {
-    return dynamic_cast<const IOperand *>((this->*_creator[type])(value));
+    return (this->*_creator[type])(value);
 }
 
 IOperand const* OperandFactory::createInt8(const std::string &value) const{

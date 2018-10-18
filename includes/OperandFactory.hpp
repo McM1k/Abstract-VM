@@ -12,7 +12,10 @@
 
 #ifndef OPERANDFACTORY_HPP
 # define OPERANDFACTORY_HPP
-# include "Operand.hpp"
+
+
+# include "eOperandType.hpp"
+# include "IOperand.hpp"
 # include "../exceptions/OperandExceptions.epp"
 # include <iostream>
 # include <array>
@@ -21,8 +24,8 @@
 
 class OperandFactory {
 public:
-	OperandFactory(void);
-	virtual ~OperandFactory(void) = default;
+	OperandFactory();
+	virtual ~OperandFactory() = default;
 
 	IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 

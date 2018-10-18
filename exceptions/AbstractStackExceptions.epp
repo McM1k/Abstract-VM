@@ -19,23 +19,9 @@ public :
     }
 };
 
-class DivByZeroException : public std::exception {
-public :
-    virtual const char *what() const throw(){
-        return "You tried to divide by zero, which is impossible";
-    }
-};
-
 class NotPrintableException : public std::exception {
 public :
     virtual const char *what() const throw(){
             return "Not an Int8 : cannot print";
-    }
-};
-
-class ModOnFloatException : public std::exception {
-public :
-    virtual const char *what() const throw(){
-        return "Can't obtain a modulo on an non-euclidian division";
     }
 };

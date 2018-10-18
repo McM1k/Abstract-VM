@@ -15,9 +15,8 @@
 
 # include "IOperand.hpp"
 # include "eOperandType.hpp"
-# include "../includes/OperandFactory.hpp"
+# include "OperandFactory.hpp"
 # include "../exceptions/OperandExceptions.epp"
-#include "OperandFactory.hpp"
 # include <iostream>
 # include <sstream>
 
@@ -44,7 +43,7 @@ public:
 /***********************************************************************
  * Destructors * Destructors * Destructors * Destructors * Destructors *
  ***********************************************************************/
-	virtual ~T(void){}
+	virtual ~Operand() = default;
 
 /***********************************************************************
  * Getters * Getters * Getters * Getters * Getters * Getters * Getters *
@@ -58,16 +57,9 @@ public:
 		return this->_type;
 	} // Type of the instance
 
-	T       		getValue( void ) const{
-		return this->_value;
-	}
-
 /***********************************************************************
  * Setters * Setters * Setters * Setters * Setters * Setters * Setters *
  ***********************************************************************/
-	void			setValue(T value){
-		this->_value = value;
-	}
 
 /*************************************************************************
  * Operators * Operators * Operators * Operators * Operators * Operators *
@@ -100,128 +92,84 @@ public:
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
 	IOperand const * operator+( IOperand const & rhs ) const{
-		// TODO tout refaire lol
+		long double result = this->_value + std::stold(rhs.toString());
+		eOperandType resultType;
+
         if (this->getPrecision() >= rhs.getPrecision()){
-
+			resultType = this->getType();
         } else {
-
+			resultType = rhs.getType();
         }
-
-		if (rhs.getPrecision() > this->getPrecision()) {
-			if ((this->getValue() + rhs.getValue()) > rhs.getMax())
-				throw OverFlowException();
-			else if ((this->getValue() + rhs.getValue()) < rhs.getMin())
-				throw UnderFlowException();
-			else
-				Operand operand<rhs.getType()>(this->getValue() + rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION //TODO: create obj using builder
-		} else {
-			if ((this->getValue() + rhs.getValue()) > this->_max())
-				throw OverFlowException();
-			else if ((this->getValue() + rhs.getValue()) < this->_min())
-				throw UnderFlowException();
-			else
-				Operand operand<this->getType()>(this->getValue() + rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
-		}
+		return _factory.createOperand(resultType, result.str());
 	}
 
 	IOperand const * operator-( IOperand const & rhs ) const{
+		long double result = this->_value - std::stold(rhs.toString());
+		eOperandType resultType;
 
-
-
-
-		if (rhs.getPrecision() > this->getPrecision()) {
-			if ((- this->getValue() + rhs.getValue()) > rhs.getMax())
-				throw OverFlowException();
-			else if ((- this->getValue() + rhs.getValue()) < rhs.getMin())
-				throw UnderFlowException();
-			else
-				Operand operand<rhs.getType()>(this->getValue() - rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+		if (this->getPrecision() >= rhs.getPrecision()){
+			resultType = this->getType();
 		} else {
-			if ((this->getValue() - rhs.getValue()) > this->_max())
-				throw OverFlowException();
-			else if ((this->getValue() - rhs.getValue()) < this->_min())
-				throw UnderFlowException();
-			else
-				Operand operand<this->getType()>(this->getValue() - rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+			resultType = rhs.getType();
 		}
+		return _factory.createOperand(resultType, result.str());
 	}
 
 	IOperand const * operator*( IOperand const & rhs ) const{
-		if (rhs.getPrecision() > this->getPrecision()) {
-			if ((this->getValue() * rhs.getValue()) > rhs.getMax())
-				throw OverFlowException();
-			else if ((this->getValue() * rhs.getValue()) < rhs.getMin())//TODO : repair all this so i dont get an overflow if i try to mul int8(127) * int8(127)
-				throw UnderFlowException();
-			else
-				Operand operand<rhs.getType()>(this->getValue() * rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+		long double result = this->_value * std::stold(rhs.toString());
+		eOperandType resultType;
+
+		if (this->getPrecision() >= rhs.getPrecision()){
+			resultType = this->getType();
 		} else {
-			if ((this->getValue() * rhs.getValue()) > this->_max())
-				throw OverFlowException();
-			else if ((this->getValue() * rhs.getValue()) < this->_min())
-				throw UnderFlowException();
-			else
-				Operand operand<this->getType()>(this->getValue() * rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
+			resultType = rhs.getType();
 		}
+		return _factory.createOperand(resultType, result.str());
 	}
 
 	IOperand const * operator/( IOperand const & rhs ) const{
-		if (rhs.getValue() == 0)
+		long double a = this->_value;
+		long double b = std::stold(rhs.toString());
+		if (b == 0)
 			throw DivideByZeroException();
-		else {
-			if (rhs.getPrecision() > this->getPrecision()) {
-				if ((this->getValue() + rhs.getValue()) > rhs.getMax())
-					throw OverFlowException();
-				else if ((this->getValue() + rhs.getValue()) < rhs.getMin())
-					throw UnderFlowException();
-				else
-					Operand operand<rhs.getType()>(this->getValue() / rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
-			} else {
-				if ((this->getValue() + rhs.getValue()) > this->_max())
-					throw OverFlowException();
-				else if ((this->getValue() + rhs.getValue()) < this->_min())
-					throw UnderFlowException();
-				else
-					Operand operand<this->getType()>(this->getValue() / rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
-			}
+
+		long double result = a / b;
+		eOperandType resultType;
+
+		if (this->getPrecision() >= rhs.getPrecision()){
+			resultType = this->getType();
+		} else {
+			resultType = rhs.getType();
 		}
+		return _factory.createOperand(resultType, result.str());
 	}
 
 	IOperand const * operator%( IOperand const & rhs ) const{
-		if (rhs.getValue() == 0)
+		if (this->getType() > eOperandType::Int32 || rhs.getType() > eOperandType::Int32)
+			throw ModOnFloatException();
+
+		long long a = this->_value;
+		long long b = std::stoll(rhs.toString());
+		if (b == 0)
 			throw DivideByZeroException();
-		else {
-			if (rhs.getPrecision() > this->getPrecision()) {
-				if ((this->getValue() + rhs.getValue()) > rhs.getMax())
-					throw OverFlowException();
-				else if ((this->getValue() + rhs.getValue()) < rhs.getMin())
-					throw UnderFlowException();
-				else
-					Operand operand<rhs.getType()>(
-							this->getValue() % rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
-			} else {
-				if ((this->getValue() + rhs.getValue()) > this->_max())
-					throw OverFlowException();
-				else if ((this->getValue() + rhs.getValue()) < this->_min())
-					throw UnderFlowException();
-				else
-					Operand operand<this->getType()>(
-							this->getValue() % rhs.getValue()); //MAY CAST INCORRECTLY AND LOSE PRECISION
-			}
+
+		long long result = a % b;
+		eOperandType resultType;
+
+		if (this->getPrecision() >= rhs.getPrecision()){
+			resultType = this->getType();
+		} else {
+			resultType = rhs.getType();
 		}
+		return _factory.createOperand(resultType, result.str());
 	}
 
-	bool operator==(IOperand const & rhs) const{
-	    if ((this->_type == rhs.getType()) &&
-	        (this->_value == rhs.getValue())){
-	        return true;
-	    }
-	    return false;
-	}
 
 private:
-	int				const _precision;
-	eOperandType	const _type;
-	T				_value;
+	int						const 	_precision;
+	eOperandType			const 	_type;
+	T								_value;
+	static OperandFactory			_factory;
 
 	Operand() = default;
 };

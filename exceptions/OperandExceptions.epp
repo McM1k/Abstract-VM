@@ -18,3 +18,10 @@ public :
         return "Dividing by zero";
     }
 };
+
+class ModOnFloatException : public std::exception {
+public :
+    virtual const char *what() const throw(){
+        return "Can't obtain a modulo on an non-euclidian division";
+    }
+};

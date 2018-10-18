@@ -49,7 +49,9 @@ SRC_NAME =	Operand.tpp\
 			OperandFactory.cpp\
 			AbstractStack.cpp\
 			Lexer.cpp\
-			Parser.cpp
+			Parser.cpp\
+			Token.cpp\
+			main.cpp
 
 # objects
 OBJ_NAME =		$(SRC_NAME:.cpp=.o)

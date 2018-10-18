@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 
 #ifndef IOPERAND_HPP
-#define IOPERAND_HPP
-#include <string>
+# define IOPERAND_HPP
+
+# include <string>
+# include "eOperandType.hpp"
 
 class IOperand {
 
