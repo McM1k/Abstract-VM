@@ -92,25 +92,28 @@ void Parser::executeNextLine(std::list<std::string> *lines) {
     line.erase(0, commandTk.getContent().length());
 
     throwableTk = Lexer::findSeparator(line);
+    if (throwableTk.getContent().length() == 0)
+        throw SyntaxErrorException();
     line.erase(0, 1);//faster than getting length
-    //TODO throw if syntax error
 
     typeTk = Lexer::findType(line);
     line.erase(0, typeTk.getContent().length());
 
     throwableTk = Lexer::findOpenBracket(line);
+    if (throwableTk.getContent().length() == 0)
+        throw SyntaxErrorException();
     line.erase(0, 1);
-    //TODO throw if syntax error
 
     valueTk = Lexer::findValue(line);
     line.erase(0, valueTk.getContent().length());
 
     throwableTk = Lexer::findCloseBracket(line);
+    if (throwableTk.getContent().length() == 0)
+        throw SyntaxErrorException();
     line.erase(0, 1);
-    //TODO throw if syntax error
 
     if (line.length()){
-        //TODO throw syntax error
+        throw SyntaxErrorException();
     }
     //TODO exec part
 }

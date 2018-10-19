@@ -1,3 +1,7 @@
+#ifndef ABSTRACTSTACKEXCEPTIONS_EPP
+# define ABSTRACTSTACKEXCEPTIONS_EPP
+# include <exception>
+
 class EmptyStackException : public std::exception {
 public :
     virtual const char *what() const throw(){
@@ -25,3 +29,4 @@ public :
             return "Not an Int8 : cannot print";
     }
 };
+#endif

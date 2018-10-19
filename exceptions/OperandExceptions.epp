@@ -1,3 +1,7 @@
+#ifndef OPERANDEXCEPTIONS_EPP
+# define OPERANDEXCEPTIONS_EPP
+# include <exception>
+
 class OverFlowException : public std::exception {
 public :
     virtual const char *what() const throw(){
@@ -25,3 +29,4 @@ public :
         return "Can't obtain a modulo on an non-euclidian division";
     }
 };
+#endif

@@ -1,0 +1,32 @@
+#ifndef LEXERPARSEREXCEPTIONS_EPP
+# define LEXERPARSEREXCEPTIONS_EPP
+# include <exception>
+
+class UnknownCommandException : public std::exception {
+public :
+    virtual const char *what() const throw(){
+        return "Unknown instruction";
+    }
+};
+
+class UnknownTypeException : public std::exception {
+public :
+    virtual const char *what() const throw(){
+        return "Unknown type";
+    }
+};
+
+class BadValueException : public std::exception {
+public :
+    virtual const char *what() const throw(){
+        return "Bad value";
+    }
+};
+
+class SyntaxErrorException : public std::exception {
+public:
+    virtual const char *what() const throw(){
+        return "Syntax Error";
+    }
+};
+#endif

@@ -123,6 +123,8 @@ Token Lexer::findCommand(std::string s) {
     std::regex rgx("^(push|assert|pop|dump|print|add|sub|mul|div|mod|exit)");
 
     std::regex_search(s, sm, rgx);
+    if (!sm[0].matched)
+        throw UnknownCommandException();
     return Token(sm[0], Token::eTokenType::command);
     //TODO throw if unrecognised
 }
@@ -132,6 +134,8 @@ Token Lexer::findType(std::string s) {
     std::regex rgx("^(int8|int16|int32|float|double)");
 
     std::regex_search(s, sm, rgx);
+    if (!sm[0].matched)
+        throw UnknownTypeException();
     return Token(sm[0], Token::eTokenType::type);
     //TODO throw if unrecognised
 
@@ -142,6 +146,8 @@ Token Lexer::findValue(std::string s) {
     std::regex rgx("^([0-9])+(\\.([0-9])+)?");
 
     std::regex_search(s, sm, rgx);
+    if (!sm[0].matched)
+        throw BadValueException();
     return Token(sm[0], Token::eTokenType::value);
     //TODO throw if unrecognised
 }
