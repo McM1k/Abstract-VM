@@ -73,7 +73,7 @@ std::list<std::string> Parser::splitLines(std::istream is) {
     return lines;
 }
 
-void Parser::executeNextLine(std::list<std::string> *lines) {
+void Parser::parseNextLine(std::list<std::string> *lines) {
     std::string line = lines->front();
     Token throwableTk;
     Token commandTk;
@@ -91,31 +91,41 @@ void Parser::executeNextLine(std::list<std::string> *lines) {
     commandTk = Lexer::findCommand(line);
     line.erase(0, commandTk.getContent().length());
 
-    throwableTk = Lexer::findSeparator(line);
-    if (throwableTk.getContent().length() == 0)
-        throw SyntaxErrorException();
-    line.erase(0, 1);//faster than getting length
+    if (commandTk.getContent() == "push" || commandTk.getContent() == "assert") {
+        throwableTk = Lexer::findSeparator(line);
+        if (throwableTk.getContent().length() == 0)
+            throw SyntaxErrorException();
+        line.erase(0, 1);//faster than getting length
 
-    typeTk = Lexer::findType(line);
-    line.erase(0, typeTk.getContent().length());
+        typeTk = Lexer::findType(line);
+        line.erase(0, typeTk.getContent().length());
 
-    throwableTk = Lexer::findOpenBracket(line);
-    if (throwableTk.getContent().length() == 0)
-        throw SyntaxErrorException();
-    line.erase(0, 1);
+        throwableTk = Lexer::findOpenBracket(line);
+        if (throwableTk.getContent().length() == 0)
+            throw SyntaxErrorException();
+        line.erase(0, 1);
 
-    valueTk = Lexer::findValue(line);
-    line.erase(0, valueTk.getContent().length());
+        valueTk = Lexer::findValue(line);
+        line.erase(0, valueTk.getContent().length());
 
-    throwableTk = Lexer::findCloseBracket(line);
-    if (throwableTk.getContent().length() == 0)
-        throw SyntaxErrorException();
-    line.erase(0, 1);
+        throwableTk = Lexer::findCloseBracket(line);
+        if (throwableTk.getContent().length() == 0)
+            throw SyntaxErrorException();
+        line.erase(0, 1);
+    }
+    else {
+        typeTk = Token("", Token::eTokenType::none);
+        valueTk = typeTk;
+    }
 
     if (line.length()){
         throw SyntaxErrorException();
     }
-    //TODO exec part
+    executeTokens(commandTk, typeTk, valueTk);
+}
+
+void Parser::executeTokens(Token command, Token type, Token value) {
+    //TODO
 }
 
 /*******************************************************************************

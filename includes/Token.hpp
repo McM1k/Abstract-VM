@@ -11,7 +11,7 @@ public:
     virtual ~Token(void);
     Token &operator=(Token const &rhs); //equals
 
-    typedef enum {command, separator, type, value, openBracket, closeBracket, comment} eTokenType;
+    typedef enum {command, separator, type, value, openBracket, closeBracket, comment, none} eTokenType;
 
     Token(std::string content, Token::eTokenType type);
 

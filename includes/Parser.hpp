@@ -26,10 +26,11 @@ public:
     Parser &operator=(Parser const &rhs);
 
     std::list<std::string> splitLines(std::istream is);
-    void executeNextLine(std::list<std::string> *lines); //TODO throws stuff
+    void parseNextLine(std::list<std::string> *lines);
+    void executeTokens(Token command, Token type, Token value);
     //TODO function that reads while theres still lines
 
-    //TODO exceptions syntax error, missing exit
+    //TODO exception missing exit
 private:
     std::list<std::string> _lines;
     //TODO map<string, funct>

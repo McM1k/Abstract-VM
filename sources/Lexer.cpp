@@ -126,7 +126,6 @@ Token Lexer::findCommand(std::string s) {
     if (!sm[0].matched)
         throw UnknownCommandException();
     return Token(sm[0], Token::eTokenType::command);
-    //TODO throw if unrecognised
 }
 
 Token Lexer::findType(std::string s) {
@@ -137,8 +136,6 @@ Token Lexer::findType(std::string s) {
     if (!sm[0].matched)
         throw UnknownTypeException();
     return Token(sm[0], Token::eTokenType::type);
-    //TODO throw if unrecognised
-
 }
 
 Token Lexer::findValue(std::string s) {
@@ -149,7 +146,6 @@ Token Lexer::findValue(std::string s) {
     if (!sm[0].matched)
         throw BadValueException();
     return Token(sm[0], Token::eTokenType::value);
-    //TODO throw if unrecognised
 }
 
 /*******************************************************************************
