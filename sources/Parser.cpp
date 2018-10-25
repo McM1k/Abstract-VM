@@ -11,13 +11,27 @@
 /* ************************************************************************** */
 
 #include "../includes/Parser.hpp"
+#include "../includes/AbstractStack.hpp"
 
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
 Parser::Parser(void) {
-    //TODO cosntruct map with tokens and corresponding keywords
-
+    this->_types["int8"] = eOperandType::Int8;
+    this->_types["int16"] = eOperandType::Int16;
+    this->_types["int32"] = eOperandType::Int32;
+    this->_types["float"] = eOperandType::Float;
+    this->_types["double"] = eOperandType::Double;
+    this->_instructs["pop"] = AbstractStack::pop();
+    this->_instructs["dump"] = AbstractStack::dump();
+    this->_instructs["print"] = AbstractStack::print();
+    this->_instructs["add"] = AbstractStack::add();
+    this->_instructs["sub"] = AbstractStack::sub();
+    this->_instructs["mul"] = AbstractStack::mul();
+    this->_instructs["div"] = AbstractStack::div();
+    this->_instructs["mod"] = AbstractStack::mod();
+    this->_instructsWithArgs["push"] = AbstractStack::push(IOperand const *);
+    this->_instructsWithArgs["assert"] = AbstractStack::assert(IOperand const *);
 }
 
 Parser::Parser(Parser const &src) {
@@ -112,22 +126,27 @@ void Parser::parseNextLine(std::list<std::string> *lines) {
         if (throwableTk.getContent().length() == 0)
             throw SyntaxErrorException();
         line.erase(0, 1);
+
+        if (line.length()){
+            throw SyntaxErrorException();
+        }
+        executeTokens(commandTk, typeTk, valueTk);
     }
     else {
-        typeTk = Token("", Token::eTokenType::none);
-        valueTk = typeTk;
+        if (line.length()){
+            throw SyntaxErrorException();
+        }
+        executeTokens(commandTk);
     }
+}
 
-    if (line.length()){
-        throw SyntaxErrorException();
-    }
-    executeTokens(commandTk, typeTk, valueTk);
+void Parser::executeTokens(Token command) {
+    (this->_instructs[command.getContent()])();
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
-    if (type.getType() == Token::eTokenType::none){
-
-    } else
+    IOperand const * operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
+    (this->_instructsWithArgs[command.getContent()])(operand);
 }
 
 /*******************************************************************************

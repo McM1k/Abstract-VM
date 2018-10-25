@@ -14,6 +14,9 @@
 # define PARSER_HPP
 # include "../includes/Token.hpp"
 # include "../includes/Lexer.hpp"
+# include "../includes/IOperand.hpp"
+# include "../includes/OperandFactory.hpp"
+# include "../includes/eOperandType.hpp"
 # include <iostream>
 # include <string>
 # include <list>
@@ -28,13 +31,19 @@ public:
 
     std::list<std::string> splitLines(std::istream is);
     void parseNextLine(std::list<std::string> *lines);
+    void executeTokens(Token command);
     void executeTokens(Token command, Token type, Token value);
     //TODO function that reads while theres still lines
 
+
+
     //TODO exception missing exit
 private:
+    OperandFactory const _factory;
     std::list<std::string> _lines;
-    std::map<std::string, >
+    std::map<std::string, ???> _instructs;
+    std::map<std::string, ???WithArgs> _instructsWithArgs;
+    std::map<std::string, eOperandType> _types;
     //TODO map<string, funct>
 
 };
