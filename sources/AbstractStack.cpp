@@ -90,9 +90,9 @@ void AbstractStack::add(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand const * a = this->_stack.top();
-        this->_stack.pop();
         IOperand const * b = this->_stack.top();
+        this->_stack.pop();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
         push(*a + *b);
@@ -103,9 +103,9 @@ void AbstractStack::sub(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand const * a = this->_stack.top();
-        this->_stack.pop();
         IOperand const * b = this->_stack.top();
+        this->_stack.pop();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
         push(*a - *b);
@@ -116,9 +116,9 @@ void AbstractStack::mul(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand const * a = this->_stack.top();
-        this->_stack.pop();
         IOperand const * b = this->_stack.top();
+        this->_stack.pop();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
         push(*a * *b);
@@ -129,9 +129,9 @@ void AbstractStack::div(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand const * a = this->_stack.top();
-        this->_stack.pop();
         IOperand const * b = this->_stack.top();
+        this->_stack.pop();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
         push(*a / *b);
@@ -142,9 +142,9 @@ void AbstractStack::mod(){
     if (this->_stack.size() < 2)
         throw StackTooShortException();
     else {
-        IOperand const * a = this->_stack.top();
-        this->_stack.pop();
         IOperand const * b = this->_stack.top();
+        this->_stack.pop();
+        IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
         push(*a % *b);
@@ -159,6 +159,6 @@ void AbstractStack::print() const{
         if (myChar->getType() != eOperandType::Int8)
             throw NotPrintableException();
         else
-            std::cout << myChar->toString() << std::endl;
+            std::cout << static_cast<char>(std::stoi(myChar->toString())) << std::endl;
     }
 }

@@ -158,7 +158,7 @@ public:
 			throw ModOnFloatException();
 
 		long long a = static_cast<long long>(this->_value);
-		long long b = static_cast<long long>(std::stoll(rhs.toString()));
+		long long b = std::stoll(rhs.toString());
 		if (b == 0)
 			throw DivideByZeroException();
 
