@@ -16,8 +16,8 @@
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
 Parser::Parser(void) {
-    //std::cout << "An instance of Parser has been created" << std::endl;
     //TODO cosntruct map with tokens and corresponding keywords
+
 }
 
 Parser::Parser(Parser const &src) {
@@ -125,7 +125,9 @@ void Parser::parseNextLine(std::list<std::string> *lines) {
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
-    //TODO
+    if (type.getType() == Token::eTokenType::none){
+
+    } else
 }
 
 /*******************************************************************************

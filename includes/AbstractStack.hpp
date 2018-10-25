@@ -31,7 +31,7 @@ public:
 
 
 private:
-    std::stack<IOperand const *> _stack;
+    std::stack<IOperand const *> _stack
 
     void push(IOperand const * value);
     void pop(void);

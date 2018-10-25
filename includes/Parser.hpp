@@ -17,6 +17,7 @@
 # include <iostream>
 # include <string>
 # include <list>
+#include <map>
 
 class Parser {
 public:
@@ -33,6 +34,7 @@ public:
     //TODO exception missing exit
 private:
     std::list<std::string> _lines;
+    std::map<std::string, >
     //TODO map<string, funct>
 
 };
