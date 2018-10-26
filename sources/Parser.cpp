@@ -22,16 +22,16 @@ Parser::Parser(void) {
     this->_types["int32"] = eOperandType::Int32;
     this->_types["float"] = eOperandType::Float;
     this->_types["double"] = eOperandType::Double;
-    this->_instructs["pop"] = AbstractStack::pop();
-    this->_instructs["dump"] = AbstractStack::dump();
-    this->_instructs["print"] = AbstractStack::print();
-    this->_instructs["add"] = AbstractStack::add();
-    this->_instructs["sub"] = AbstractStack::sub();
-    this->_instructs["mul"] = AbstractStack::mul();
-    this->_instructs["div"] = AbstractStack::div();
-    this->_instructs["mod"] = AbstractStack::mod();
-    this->_instructsWithArgs["push"] = AbstractStack::push(IOperand const *);
-    this->_instructsWithArgs["assert"] = AbstractStack::assert(IOperand const *);
+    this->_instructs["pop"] = &_abstractStack.pop();
+    this->_instructs["dump"] = &AbstractStack::dump();
+    this->_instructs["print"] = &AbstractStack::print();
+    this->_instructs["add"] = &AbstractStack::add();
+    this->_instructs["sub"] = &AbstractStack::sub();
+    this->_instructs["mul"] = &AbstractStack::mul();
+    this->_instructs["div"] = &AbstractStack::div();
+    this->_instructs["mod"] = &AbstractStack::mod();
+    this->_instructsWithArgs["push"] = &AbstractStack::push(IOperand const *);
+    this->_instructsWithArgs["assert"] = &AbstractStack::assert(IOperand const *);
 }
 
 Parser::Parser(Parser const &src) {

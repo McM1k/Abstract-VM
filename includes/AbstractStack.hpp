@@ -29,10 +29,6 @@ public:
 
     std::stack<IOperand const *> getStack(void) const;
 
-
-private:
-    std::stack<IOperand const *> _stack
-
     void push(IOperand const * value);
     void pop(void);
     void dump(void);
@@ -43,6 +39,8 @@ private:
     void div(void);
     void mod(void);
     void print(void) const;
+private:
+    std::stack<IOperand const *> _stack;
 };
 
 #endif

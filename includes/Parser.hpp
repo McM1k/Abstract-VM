@@ -17,6 +17,7 @@
 # include "../includes/IOperand.hpp"
 # include "../includes/OperandFactory.hpp"
 # include "../includes/eOperandType.hpp"
+# include "../includes/AbstractStack.hpp"
 # include <iostream>
 # include <string>
 # include <list>
@@ -35,14 +36,16 @@ public:
     void executeTokens(Token command, Token type, Token value);
     //TODO function that reads while theres still lines
 
-
+    typedef void (*instructAddr)(void);
+    typedef void (*instructAddrWithArgs)(IOperand const *);
 
     //TODO exception missing exit
 private:
+    AbstractStack _abstractStack;
     OperandFactory const _factory;
     std::list<std::string> _lines;
-    std::map<std::string, ???> _instructs;
-    std::map<std::string, ???WithArgs> _instructsWithArgs;
+    std::map<std::string, instructAddr> _instructs;
+    std::map<std::string, instructAddrWithArgs> _instructsWithArgs;
     std::map<std::string, eOperandType> _types;
     //TODO map<string, funct>
 
