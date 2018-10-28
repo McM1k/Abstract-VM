@@ -22,9 +22,9 @@ Parser::Parser(void) {
     this->_types["int32"] = eOperandType::Int32;
     this->_types["float"] = eOperandType::Float;
     this->_types["double"] = eOperandType::Double;
-    this->_instructs["pop"] = &_abstractStack.pop();
-    this->_instructs["dump"] = &AbstractStack::dump();
-    this->_instructs["print"] = &AbstractStack::print();
+    this->_instructs["pop"] = &_abstractStack.pop;
+    this->_instructs["dump"] = &_abstractStack.dump();
+    this->_instructs["print"] = &AbstractStack::print;
     this->_instructs["add"] = &AbstractStack::add();
     this->_instructs["sub"] = &AbstractStack::sub();
     this->_instructs["mul"] = &AbstractStack::mul();

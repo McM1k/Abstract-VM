@@ -47,7 +47,6 @@ private:
     std::map<std::string, instructAddr> _instructs;
     std::map<std::string, instructAddrWithArgs> _instructsWithArgs;
     std::map<std::string, eOperandType> _types;
-    //TODO map<string, funct>
 
 };
 
