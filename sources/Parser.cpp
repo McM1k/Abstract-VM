@@ -141,12 +141,12 @@ void Parser::parseNextLine(std::list<std::string> *lines) {
 }
 
 void Parser::executeTokens(Token command) {
-    this->_instructs[command.getContent()];
+    _abstractStack->(this->_instructs[command.getContent()])();
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
     IOperand const * operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
-    _abstractStack.(this->_instructsWithArgs[command.getContent()])(operand);
+    _abstractStack->(this->_instructsWithArgs[command.getContent()])(operand);
 }
 
 /*******************************************************************************
