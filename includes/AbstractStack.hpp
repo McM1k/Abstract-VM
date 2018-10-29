@@ -32,13 +32,13 @@ public:
     void push(IOperand const * value);
     void pop(void);
     void dump(void);
-    void assert(IOperand * value) const;
+    void assert(IOperand const * value);
     void add(void);
     void sub(void);
     void mul(void);
     void div(void);
     void mod(void);
-    void print(void) const;
+    void print(void);
 private:
     std::stack<IOperand const *> _stack;
 };

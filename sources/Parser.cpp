@@ -22,16 +22,16 @@ Parser::Parser(void) {
     this->_types["int32"] = eOperandType::Int32;
     this->_types["float"] = eOperandType::Float;
     this->_types["double"] = eOperandType::Double;
-    this->_instructs["pop"] = &_abstractStack.pop;
-    this->_instructs["dump"] = &_abstractStack.dump();
+    this->_instructs["pop"] = &AbstractStack::pop;
+    this->_instructs["dump"] = &AbstractStack::dump;
     this->_instructs["print"] = &AbstractStack::print;
-    this->_instructs["add"] = &AbstractStack::add();
-    this->_instructs["sub"] = &AbstractStack::sub();
-    this->_instructs["mul"] = &AbstractStack::mul();
-    this->_instructs["div"] = &AbstractStack::div();
-    this->_instructs["mod"] = &AbstractStack::mod();
-    this->_instructsWithArgs["push"] = &AbstractStack::push(IOperand const *);
-    this->_instructsWithArgs["assert"] = &AbstractStack::assert(IOperand const *);
+    this->_instructs["add"] = &AbstractStack::add;
+    this->_instructs["sub"] = &AbstractStack::sub;
+    this->_instructs["mul"] = &AbstractStack::mul;
+    this->_instructs["div"] = &AbstractStack::div;
+    this->_instructs["mod"] = &AbstractStack::mod;
+    this->_instructsWithArgs["push"] = &AbstractStack::push;
+    this->_instructsWithArgs["assert"] = &AbstractStack::assert;
 }
 
 Parser::Parser(Parser const &src) {
@@ -141,12 +141,12 @@ void Parser::parseNextLine(std::list<std::string> *lines) {
 }
 
 void Parser::executeTokens(Token command) {
-    (this->_instructs[command.getContent()])();
+    this->_instructs[command.getContent()];
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
     IOperand const * operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
-    (this->_instructsWithArgs[command.getContent()])(operand);
+    _abstractStack.(this->_instructsWithArgs[command.getContent()])(operand);
 }
 
 /*******************************************************************************

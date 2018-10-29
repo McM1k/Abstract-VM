@@ -36,12 +36,12 @@ public:
     void executeTokens(Token command, Token type, Token value);
     //TODO function that reads while theres still lines
 
-    typedef void (*instructAddr)(void);
-    typedef void (*instructAddrWithArgs)(IOperand const *);
+    typedef void (AbstractStack::*instructAddr)();
+    typedef void (AbstractStack::*instructAddrWithArgs)(IOperand const *);
 
     //TODO exception missing exit
 private:
-    AbstractStack _abstractStack;
+    AbstractStack *_abstractStack;
     OperandFactory const _factory;
     std::list<std::string> _lines;
     std::map<std::string, instructAddr> _instructs;

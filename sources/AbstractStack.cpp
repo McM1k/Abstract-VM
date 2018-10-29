@@ -79,7 +79,7 @@ void AbstractStack::dump() {
     std::cout << ss.str();
 }
 
-void AbstractStack::assert(IOperand * value) const{
+void AbstractStack::assert(IOperand const * value){
     if (this->_stack.empty())
         throw EmptyStackException();
     else if (!(this->_stack.top()->toString() == value->toString()))
@@ -151,7 +151,7 @@ void AbstractStack::mod(){
     }
 }
 
-void AbstractStack::print() const{
+void AbstractStack::print(){
     if (this->_stack.empty())
         throw EmptyStackException();
     else {
