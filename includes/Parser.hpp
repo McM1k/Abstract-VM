@@ -30,16 +30,16 @@ public:
     virtual ~Parser(void);
     Parser &operator=(Parser const &rhs);
 
-    std::list<std::string> splitLines(std::istream is);
-    void parseNextLine(std::list<std::string> *lines);
+    //TODO function that reads while theres still lines // use for standard input
+//    std::list<std::string> stockLines(/*file*/);//TODO this one that also reads from standard input but stocks everything until ;; appears
+//    std::list<std::string> splitLines(std::istream is); //used in the case of a file
+    void parseLine(std::string line);
     void executeTokens(Token command);
     void executeTokens(Token command, Token type, Token value);
-    //TODO function that reads while theres still lines
 
     typedef void (AbstractStack::*instructAddr)();
     typedef void (AbstractStack::*instructAddrWithArgs)(IOperand const *);
 
-    //TODO exception missing exit
 private:
     AbstractStack *_abstractStack;
     OperandFactory const _factory;

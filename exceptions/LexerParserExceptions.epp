@@ -29,4 +29,11 @@ public:
         return "Syntax Error";
     }
 };
+
+class MissingExitException : public std::exception {
+public:
+    virtual const char *what() const throw(){
+        return "No exit at the end of the program";
+    }
+};
 #endif

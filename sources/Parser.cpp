@@ -75,20 +75,28 @@ std::ostream &operator<<(std::ostream &o, Parser const &i) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
-std::list<std::string> Parser::splitLines(std::istream is) {
-    std::string str;
-    std::list<std::string> lines;
+//std::list<std::string> Parser::stockLines(/*file*/) {
+//    std::string str;
+//    std::list<std::string> lines;
+//
+//    while (getline(file.firstLine, str)){
+//
+//    }
+//}
+//
+//std::list<std::string> Parser::splitLines(std::istream is) {
+//    std::string str;
+//    std::list<std::string> lines;
+//
+//    while(getline(is, str)){
+//        lines.push_back(str);
+//    }
+//
+//    lines = this->_lines;
+//    return lines;
+//}
 
-    while(getline(is, str)){
-        lines.push_back(str);
-    }
-
-    lines = this->_lines;
-    return lines;
-}
-
-void Parser::parseNextLine(std::list<std::string> *lines) {
-    std::string line = lines->front();
+void Parser::parseLine(std::string line) {
     Token throwableTk;
     Token commandTk;
     Token typeTk;
@@ -98,7 +106,6 @@ void Parser::parseNextLine(std::list<std::string> *lines) {
     size_t pos = line.find(throwableTk.getContent());
     line.erase(pos, throwableTk.getContent().length());
     if (line.length()){
-        lines->pop_front();
         return;
     }
 
@@ -141,12 +148,12 @@ void Parser::parseNextLine(std::list<std::string> *lines) {
 }
 
 void Parser::executeTokens(Token command) {
-    _abstractStack->(this->_instructs[command.getContent()])();
+    (_abstractStack->(this->*_instructs[command.getContent()]))();
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
     IOperand const * operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
-    _abstractStack->(this->_instructsWithArgs[command.getContent()])(operand);
+    (_abstractStack->(this->*_instructsWithArgs[command.getContent()]))(operand);
 }
 
 /*******************************************************************************
