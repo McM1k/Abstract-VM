@@ -43,7 +43,6 @@ public:
 private:
     AbstractStack *_abstractStack;
     OperandFactory const _factory;
-    std::list<std::string> _lines;
     std::map<std::string, instructAddr> _instructs;
     std::map<std::string, instructAddrWithArgs> _instructsWithArgs;
     std::map<std::string, eOperandType> _types;
