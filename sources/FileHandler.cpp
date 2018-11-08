@@ -50,16 +50,9 @@ std::ostream &operator<<(std::ostream &o, FileHandler const &i) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
-std::list<std::string> FileHandler::stockLines(file) {
-    std::string str;
-    std::list<std::string> lines;
 
-    while (getline(file.firstLine, str)){
 
-    }
-}
-
-std::list<std::string> FileHandler::splitLines(std::istream is) {
+std::list<std::string> FileHandler::stockLines(std::istream is) {
     std::string str;
     std::list<std::string> lines;
 

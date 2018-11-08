@@ -36,4 +36,11 @@ public:
         return "No exit at the end of the program";
     }
 };
+
+class CommandAfterExitException : public std::exception {
+public:
+    virtual const char *what() const throw(){
+        return "Exit must be the last command";
+    }
+};
 #endif

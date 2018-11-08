@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/Parser.hpp"
-#include "../includes/AbstractStack.hpp"
 
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
@@ -32,6 +31,8 @@ Parser::Parser(void) {
     this->_instructs["mod"] = &AbstractStack::mod;
     this->_instructsWithArgs["push"] = &AbstractStack::push;
     this->_instructsWithArgs["assert"] = &AbstractStack::assert;
+
+    _exitBool = false;
 }
 
 Parser::Parser(Parser const &src) {
@@ -105,9 +106,8 @@ void Parser::parseLine(std::string line) {
     throwableTk = Lexer::findComment(line);
     size_t pos = line.find(throwableTk.getContent());
     line.erase(pos, throwableTk.getContent().length());
-    if (line.length()){
-        return;
-    }
+    if (line.length()) { return; }
+    if (_exitBool) { throw CommandAfterExitException(); }
 
     commandTk = Lexer::findCommand(line);
     line.erase(0, commandTk.getContent().length());
@@ -139,6 +139,7 @@ void Parser::parseLine(std::string line) {
         }
         executeTokens(commandTk, typeTk, valueTk);
     }
+    else if (commandTk.getContent() == "exit") { this->_exitBool = true; }
     else {
         if (line.length()){
             throw SyntaxErrorException();

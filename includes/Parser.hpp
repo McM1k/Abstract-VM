@@ -18,6 +18,7 @@
 # include "../includes/OperandFactory.hpp"
 # include "../includes/eOperandType.hpp"
 # include "../includes/AbstractStack.hpp"
+# include "../exceptions/LexerParserExceptions.epp"
 # include <iostream>
 # include <string>
 # include <list>
@@ -46,6 +47,7 @@ private:
     std::map<std::string, instructAddr> _instructs;
     std::map<std::string, instructAddrWithArgs> _instructsWithArgs;
     std::map<std::string, eOperandType> _types;
+    bool                                        _exitBool;
 
 };
 
