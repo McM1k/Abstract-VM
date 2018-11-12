@@ -44,7 +44,8 @@ Parser::Parser(Parser const &src) {
  * Destructors * Destructors * Destructors * Destructors * Destructors *
  ***********************************************************************/
 Parser::~Parser(void) {
-    //std::cout << "An instance of Parser has been destroyed" << std::endl;
+    if (!_exitBool)
+        throw MissingExitException();
 }
 
 /***********************************************************************
@@ -109,7 +110,11 @@ void Parser::parseLine(std::string line) {
     if (line.length()) { return; }
     if (_exitBool) { throw CommandAfterExitException(); }
 
-    commandTk = Lexer::findCommand(line);
+    try {
+        commandTk = Lexer::findCommand(line);
+    } catch (const UnknownCommandException e) {
+        std::cout << e.what() << std::endl;
+    }
     line.erase(0, commandTk.getContent().length());
 
     if (commandTk.getContent() == "push" || commandTk.getContent() == "assert") {
@@ -118,16 +123,24 @@ void Parser::parseLine(std::string line) {
             throw SyntaxErrorException();
         line.erase(0, 1);//faster than getting length
 
-        typeTk = Lexer::findType(line);
-        line.erase(0, typeTk.getContent().length());
+        try {
+            typeTk = Lexer::findType(line);
+            line.erase(0, typeTk.getContent().length());
+        } catch (const UnknownTypeException e) {
+            std::cout << e.what() << std::endl;
+        }
 
         throwableTk = Lexer::findOpenBracket(line);
         if (throwableTk.getContent().length() == 0)
             throw SyntaxErrorException();
         line.erase(0, 1);
 
-        valueTk = Lexer::findValue(line);
-        line.erase(0, valueTk.getContent().length());
+        try {
+            valueTk = Lexer::findValue(line);
+            line.erase(0, valueTk.getContent().length());
+        } catch (const BadValueException e) {
+            std::cout << e.what() << std::endl;
+        }
 
         throwableTk = Lexer::findCloseBracket(line);
         if (throwableTk.getContent().length() == 0)
@@ -149,12 +162,26 @@ void Parser::parseLine(std::string line) {
 }
 
 void Parser::executeTokens(Token command) {
-    (_abstractStack->(this->*_instructs[command.getContent()]))();
+    try {
+        (_abstractStack->(this->*_instructs[command.getContent()]))();
+    } catch (const std::exception e) {
+        e.what();
+    }
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
-    IOperand const * operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
-    (_abstractStack->(this->*_instructsWithArgs[command.getContent()]))(operand);
+    try {
+        IOperand const *operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
+    } catch (const std::exception e) {
+        e.what();
+    }
+
+    try {
+        (_abstractStack->(this->*_instructsWithArgs[command.getContent()]))(operand);
+    } catch (const AssertFailException e) {
+        e.what();
+    }
+
 }
 
 /*******************************************************************************

@@ -95,7 +95,11 @@ void AbstractStack::add(){
         IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
-        push(*a + *b);
+        try {
+            push(*a + *b);
+        } catch (const std::exception e) {
+            e.what();
+        }
     }
 }
 
@@ -107,8 +111,11 @@ void AbstractStack::sub(){
         this->_stack.pop();
         IOperand const * a = this->_stack.top();
         this->_stack.pop();
-
-        push(*a - *b);
+        try {
+            push(*a - *b);
+        } catch (const std::exception e) {
+            e.what();
+        }
     }
 }
 
@@ -121,7 +128,11 @@ void AbstractStack::mul(){
         IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
-        push(*a * *b);
+        try {
+            push(*a * *b);
+        } catch (const std::exception e) {
+            e.what();
+        }
     }
 }
 
@@ -134,7 +145,11 @@ void AbstractStack::div(){
         IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
-        push(*a / *b);
+        try {
+            push(*a / *b);
+        } catch (const std::exception e) {
+            e.what();
+        }
     }
 }
 
@@ -147,7 +162,11 @@ void AbstractStack::mod(){
         IOperand const * a = this->_stack.top();
         this->_stack.pop();
 
-        push(*a % *b);
+        try {
+            push(*a % *b);
+        } catch (const std::exception e) {
+            e.what();
+        }
     }
 }
 

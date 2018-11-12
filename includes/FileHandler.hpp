@@ -6,6 +6,8 @@
 # include <fstream>
 # include <list>
 
+# include "Parser.hpp"
+
 class FileHandler{
 public:
     FileHandler(void);
@@ -13,10 +15,12 @@ public:
     virtual ~FileHandler(void);
     FileHandler &operator=(FileHandler const &rhs); //equals
 
-    std::list<std::string> stockLines(std::istream is);
+    void stockLines(std::istream is);
+    void readStdIn();
 
 private:
-    std::list<std::string> _lines;
+    Parser                  _parser;
+
 
 };
 

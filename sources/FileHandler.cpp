@@ -50,9 +50,19 @@ std::ostream &operator<<(std::ostream &o, FileHandler const &i) {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
+void FileHandler::readStdIn() {
+    std::string str;
 
+    while(getline(std::cin, str) && str != ";;") {
+        try {
+            this->_parser.parseLine(str);
+        } catch (const std::exception e) {
+            e.what();
+        }
+    }
+}
 
-std::list<std::string> FileHandler::stockLines(std::istream is) {
+void FileHandler::stockLines(std::istream is) {
     std::string str;
     std::list<std::string> lines;
 
@@ -60,8 +70,14 @@ std::list<std::string> FileHandler::stockLines(std::istream is) {
         lines.push_back(str);
     }
 
-    lines = this->_lines;
-    return lines;
+    while(lines.at(0)) {
+        try {
+            this->_parser.parseLine(lines.at(0));
+        } catch (const std::exception e) {
+            e.what();
+        }
+        lines.pop_front();
+    }
 }
 
 
