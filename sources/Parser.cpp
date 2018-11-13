@@ -172,13 +172,8 @@ void Parser::executeTokens(Token command) {
 void Parser::executeTokens(Token command, Token type, Token value) {
     try {
         IOperand const *operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
-    } catch (const std::exception e) {
-        e.what();
-    }
-
-    try {
         (_abstractStack->(this->*_instructsWithArgs[command.getContent()]))(operand);
-    } catch (const AssertFailException e) {
+    } catch (const std::exception e) {
         e.what();
     }
 

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/OperandFactory.hpp"
-# include "../includes/Operand.hpp"
+# include "Operand.cpp"
 
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *

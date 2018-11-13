@@ -13,10 +13,10 @@
 #ifndef OPERAND_TPP
 # define OPERAND_TPP
 
-# include "IOperand.hpp"
-# include "eOperandType.hpp"
-# include "OperandFactory.hpp"
-# include "../exceptions/OperandExceptions.epp"
+# include "../includes/IOperand.hpp"
+# include "../includes/eOperandType.hpp"
+# include "../includes/OperandFactory.hpp"
+# include "OperandExceptions.epp"
 # include <iostream>
 # include <sstream>
 

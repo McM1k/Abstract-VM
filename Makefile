@@ -6,7 +6,7 @@
 #    By: gboudrie <gboudrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 20:06:05 by gboudrie          #+#    #+#              #
-#    Updated: 2018/03/21 09:41:52 by gboudrie         ###   ########.fr        #
+#    Updated: 2018/11/13 16:56:23 by gboudrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,27 +38,35 @@ EXE =       AbstractVM
 LIB_A =
 
 # dir
-SRC_DIR =	srcs
-OBJ_DIR =	objs
-INC_DIR =	includes
+SRC_DIR =	    sources
+OBJ_DIR =	    objs
+OBJXCP_DIR =    objsxcp
+XCP_DIR =       exceptions
+INC_DIR =	    includes
 
 # libs
 
 # sources
-SRC_NAME =	Operand.tpp\
+SRC_NAME =	Operand.cpp\
 			OperandFactory.cpp\
 			AbstractStack.cpp\
 			Lexer.cpp\
 			Parser.cpp\
 			Token.cpp\
+			FileHandler.cpp\
+			AbstractStackExceptions.cpp\
+            LexerParserExceptions.cpp\
+            OperandExceptions.cpp\
 			main.cpp
+
+
 
 # objects
 OBJ_NAME =		$(SRC_NAME:.cpp=.o)
 
 
 #paths
-SRC =		$(SRC_NAME)
+SRC =		$(addprefix $(SRC_DIR)/, $(SRC_NAME))
 OBJ =		$(addprefix $(OBJ_DIR)/, $(OBJ_NAME))
 
 all :		$(EXE)

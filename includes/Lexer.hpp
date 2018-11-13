@@ -17,7 +17,7 @@
 # include <string>
 # include <list>
 # include "Token.hpp"
-# include "../exceptions/LexerParserExceptions.epp"
+# include "../sources/LexerParserExceptions.epp"
 
 class Lexer {
 public:
