@@ -97,8 +97,12 @@ void AbstractStack::add(){
 
         try {
             push(*a + *b);
-        } catch (const std::exception e) {
-            e.what();
+        } catch (const OverFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const UnderFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -113,8 +117,12 @@ void AbstractStack::sub(){
         this->_stack.pop();
         try {
             push(*a - *b);
-        } catch (const std::exception e) {
-            e.what();
+        } catch (const OverFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const UnderFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -130,8 +138,12 @@ void AbstractStack::mul(){
 
         try {
             push(*a * *b);
-        } catch (const std::exception e) {
-            e.what();
+        } catch (const OverFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const UnderFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -147,8 +159,14 @@ void AbstractStack::div(){
 
         try {
             push(*a / *b);
-        } catch (const std::exception e) {
-            e.what();
+        } catch (const OverFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const UnderFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const DivideByZeroException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -164,8 +182,16 @@ void AbstractStack::mod(){
 
         try {
             push(*a % *b);
-        } catch (const std::exception e) {
-            e.what();
+        } catch (const OverFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const UnderFlowException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const DivideByZeroException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const ModOnFloatException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << e.what() << std::endl;
         }
     }
 }

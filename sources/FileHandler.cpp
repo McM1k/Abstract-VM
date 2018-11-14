@@ -56,8 +56,12 @@ void FileHandler::readStdIn() {
     while(getline(std::cin, str) && str != ";;") {
         try {
             this->_parser.parseLine(str);
-        } catch (const std::exception e) {
-            e.what();
+        } catch (const SyntaxErrorException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const CommandAfterExitException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -73,8 +77,12 @@ void FileHandler::stockLines(std::istream is) {
     while(lines.at(0)) {
         try {
             this->_parser.parseLine(lines.at(0));
-        } catch (const std::exception e) {
-            e.what();
+        } catch (const SyntaxErrorException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const CommandAfterExitException& e) {
+            std::cerr << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << e.what() << std::endl;
         }
         lines.pop_front();
     }

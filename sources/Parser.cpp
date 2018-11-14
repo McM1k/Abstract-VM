@@ -112,8 +112,8 @@ void Parser::parseLine(std::string line) {
 
     try {
         commandTk = Lexer::findCommand(line);
-    } catch (const UnknownCommandException e) {
-        std::cout << e.what() << std::endl;
+    } catch (const UnknownCommandException &e) {
+        std::cerr << e.what() << std::endl;
     }
     line.erase(0, commandTk.getContent().length());
 
@@ -126,8 +126,8 @@ void Parser::parseLine(std::string line) {
         try {
             typeTk = Lexer::findType(line);
             line.erase(0, typeTk.getContent().length());
-        } catch (const UnknownTypeException e) {
-            std::cout << e.what() << std::endl;
+        } catch (const UnknownTypeException &e) {
+            std::cerr << e.what() << std::endl;
         }
 
         throwableTk = Lexer::findOpenBracket(line);
@@ -138,8 +138,8 @@ void Parser::parseLine(std::string line) {
         try {
             valueTk = Lexer::findValue(line);
             line.erase(0, valueTk.getContent().length());
-        } catch (const BadValueException e) {
-            std::cout << e.what() << std::endl;
+        } catch (const BadValueException &e) {
+            std::cerr << e.what() << std::endl;
         }
 
         throwableTk = Lexer::findCloseBracket(line);
@@ -147,14 +147,13 @@ void Parser::parseLine(std::string line) {
             throw SyntaxErrorException();
         line.erase(0, 1);
 
-        if (line.length()){
+        if (line.length()) {
             throw SyntaxErrorException();
         }
         executeTokens(commandTk, typeTk, valueTk);
-    }
-    else if (commandTk.getContent() == "exit") { this->_exitBool = true; }
+    } else if (commandTk.getContent() == "exit") { this->_exitBool = true; }
     else {
-        if (line.length()){
+        if (line.length()) {
             throw SyntaxErrorException();
         }
         executeTokens(commandTk);
@@ -164,17 +163,39 @@ void Parser::parseLine(std::string line) {
 void Parser::executeTokens(Token command) {
     try {
         (_abstractStack->(this->*_instructs[command.getContent()]))();
-    } catch (const std::exception e) {
-        e.what();
+    } catch (const EmptyStackException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const NotPrintableException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const StackTooShortException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const OverFlowException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const UnderFlowException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const DivideByZeroException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const ModOnFloatException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
     }
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
     try {
-        IOperand const *operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
+        IOperand const *operand = this->_factory.createOperand(this->_types[ty  e.getContent()], value.getContent());
         (_abstractStack->(this->*_instructsWithArgs[command.getContent()]))(operand);
+    } catch (const EmptyStackException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const UnderFlowException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const OverFlowException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const AssertFailException& e) {
+        std::cerr << e.what() << std::endl;
     } catch (const std::exception e) {
-        e.what();
+        std::cerr << e.what() << std::endl;
     }
 
 }

@@ -12,7 +12,9 @@ int main (int ac, char ** av){
         } else {
             fh.readStdIn();
         }
-    } catch (const std::exception e) {
+    } catch (const MissingExitException& e) {
+        std::cerr << e.what() << std::endl;
+    } catch (const std::exception& e) {
         e.what();
     }
     return 0;
