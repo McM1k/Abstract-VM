@@ -18,7 +18,7 @@
 # include "../includes/OperandFactory.hpp"
 # include "../includes/eOperandType.hpp"
 # include "../includes/AbstractStack.hpp"
-# include "../sources/LexerParserExceptions.epp"
+# include "../sources/LexerParserExceptions.cpp"
 # include <iostream>
 # include <string>
 # include <list>
@@ -50,8 +50,5 @@ private:
     bool                                        _exitBool;
 
 };
-
-std::ostream &operator<<(std::ostream &o, Parser const &i);
-
 
 #endif

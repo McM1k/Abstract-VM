@@ -57,10 +57,6 @@ Lexer &Lexer::operator=(Lexer const &rhs) {
 /******************************************************************************
  * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
  ******************************************************************************/
-std::ostream &operator<<(std::ostream &o, Lexer const &i) {
-    o << "no attributes" << std::endl;
-    return o;
-}
 
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *

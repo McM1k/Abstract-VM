@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/AbstractStack.hpp"
-#include "AbstractStackExceptions.epp"
+#include "AbstractStackExceptions.cpp"
 
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *

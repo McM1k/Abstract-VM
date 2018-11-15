@@ -16,7 +16,7 @@
 
 # include "eOperandType.hpp"
 # include "IOperand.hpp"
-# include "../sources/OperandExceptions.epp"
+# include "../sources/OperandExceptions.cpp"
 # include <iostream>
 # include <array>
 # include <limits>

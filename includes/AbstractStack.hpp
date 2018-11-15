@@ -14,8 +14,8 @@
 # define ABSTRACTSTACK_HPP
 # include "IOperand.hpp"
 # include "eOperandType.hpp"
-# include "../sources/AbstractStackExceptions.epp"
-# include "../sources/OperandExceptions.epp"
+# include "../sources/AbstractStackExceptions.cpp"
+# include "../sources/OperandExceptions.cpp"
 # include <iostream>
 # include <sstream>
 # include <stack>

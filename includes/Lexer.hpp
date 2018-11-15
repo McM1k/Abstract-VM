@@ -17,7 +17,7 @@
 # include <string>
 # include <list>
 # include "Token.hpp"
-# include "../sources/LexerParserExceptions.epp"
+# include "../sources/LexerParserExceptions.cpp"
 
 class Lexer {
 public:
@@ -39,8 +39,5 @@ public:
 private:
 
 };
-
-std::ostream &operator<<(std::ostream &o, Lexer const &i);
-
 
 #endif

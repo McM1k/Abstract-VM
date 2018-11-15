@@ -69,10 +69,7 @@ Parser &Parser::operator=(Parser const &rhs) {
 /******************************************************************************
  * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
  ******************************************************************************/
-std::ostream &operator<<(std::ostream &o, Parser const &i) {
-    o << "no attributes" << std::endl;
-    return o;
-}
+
 
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *

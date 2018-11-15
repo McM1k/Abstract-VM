@@ -6,7 +6,7 @@
 #    By: gboudrie <gboudrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/16 20:06:05 by gboudrie          #+#    #+#              #
-#    Updated: 2018/11/13 16:56:23 by gboudrie         ###   ########.fr        #
+#    Updated: 2018/11/15 16:36:12 by gboudrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ CR_DL =	\xe2\x95\x9a
 
 # comp
 CC =		clang++
-CFLAGS =	-Wall -Wextra -Werror
+CFLAGS =	-Wall -Wextra -Werror -std=c++11
 
 # binaries
 EXE =       AbstractVM
@@ -40,8 +40,6 @@ LIB_A =
 # dir
 SRC_DIR =	    sources
 OBJ_DIR =	    objs
-OBJXCP_DIR =    objsxcp
-XCP_DIR =       exceptions
 INC_DIR =	    includes
 
 # libs
@@ -59,8 +57,6 @@ SRC_NAME =	Operand.cpp\
             OperandExceptions.cpp\
 			main.cpp
 
-
-
 # objects
 OBJ_NAME =		$(SRC_NAME:.cpp=.o)
 
@@ -73,9 +69,10 @@ all :		$(EXE)
 $(EXE) :    $(SRC) $(OBJ)
 	@$(CC) $(OBJ) -o $@
 	@echo "$(CLEAR)$(LIG)$(BLUE) Compiling "$(EXE) "$(CLEAR)$(LIG)"
-$(OBJ_DIR)/%.o: %.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(OBJ_DIR) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -o $@ -c $<
+	@echo "$(CLEAR)$(LIG)$(BLUE) Compiling "$< "$(CLEAR)$(LIG)"
 meteo :
 	@curl http://wttr.in/Paris
 clean :

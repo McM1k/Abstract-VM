@@ -16,7 +16,7 @@
 # include "../includes/IOperand.hpp"
 # include "../includes/eOperandType.hpp"
 # include "../includes/OperandFactory.hpp"
-# include "OperandExceptions.epp"
+# include "OperandExceptions.cpp"
 # include <iostream>
 # include <sstream>
 
@@ -27,10 +27,10 @@ public:
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
 	Operand(T value, eOperandType type) :
+			_precision(static_cast<int>(type)), //cast could nest compiling errors
 			_type(type),// may not compile
-			_precision(static_cast<int>(type)) //cast could nest compiling errors
-			{
-				this->_value = value;
+			_value(value),
+			_txtValue(std::to_string(value)) {
 	}
 
 	Operand(T const & src) :
@@ -81,11 +81,7 @@ public:
  * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
  ******************************************************************************/
 	std::string const & toString( void ) const{
-		std::stringstream ss;
-		std::string str;
-		ss << this->_value;
-		str = ss.str();
-		return str;
+		return this->_txtValue;
 	} // String representation of the instance
 
 /*************************************************************************
@@ -103,7 +99,7 @@ public:
         } else {
 			resultType = rhs.getType();
         }
-		return _factory.createOperand(resultType, result.str());
+		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
 	IOperand const * operator-( IOperand const & rhs ) const{
@@ -118,7 +114,7 @@ public:
 		} else {
 			resultType = rhs.getType();
 		}
-		return _factory.createOperand(resultType, result.str());
+		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
 	IOperand const * operator*( IOperand const & rhs ) const{
@@ -133,7 +129,7 @@ public:
 		} else {
 			resultType = rhs.getType();
 		}
-		return _factory.createOperand(resultType, result.str());
+		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
 	IOperand const * operator/( IOperand const & rhs ) const{
@@ -150,7 +146,7 @@ public:
 		} else {
 			resultType = rhs.getType();
 		}
-		return _factory.createOperand(resultType, result.str());
+		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
 	IOperand const * operator%( IOperand const & rhs ) const{
@@ -170,7 +166,7 @@ public:
 		} else {
 			resultType = rhs.getType();
 		}
-		return _factory.createOperand(resultType, result.str());
+		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
 
@@ -178,7 +174,8 @@ private:
 	int						const 	_precision;
 	eOperandType			const 	_type;
 	T								_value;
-	static OperandFactory			_factory;
+	std::string				const	_txtValue;
+	OperandFactory			const	_factory;
 
 	Operand() = default;
 };
