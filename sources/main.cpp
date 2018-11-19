@@ -7,7 +7,8 @@ int main (int ac, char ** av){
     FileHandler fh;
 
     try {
-        if ((ac == 2) & (file.open(av[1]))) {
+        if (ac == 2){
+            file.open(av[1]);
             fh.stockLines(file);
         } else {
             fh.readStdIn();

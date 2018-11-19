@@ -29,7 +29,4 @@ private:
 
 };
 
-std::ostream &operator<<(std::ostream &o, Token const &i);
-
-
 #endif

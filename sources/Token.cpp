@@ -63,10 +63,6 @@ Token &Token::operator=(Token const &rhs) {
 /*
  * ToString
  */
-std::ostream &operator<<(std::ostream &o, Token const &i) {
-    o << "no attributes" << std::endl;
-    return o;
-}
 
 /*
  * Other

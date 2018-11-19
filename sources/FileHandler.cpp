@@ -42,10 +42,6 @@ FileHandler &FileHandler::operator=(FileHandler const &rhs) {
 /******************************************************************************
  * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
  ******************************************************************************/
-std::ostream &operator<<(std::ostream &o, FileHandler const &i) {
-    o << "no attributes" << std::endl;
-    return o;
-}
 
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
@@ -66,17 +62,17 @@ void FileHandler::readStdIn() {
     }
 }
 
-void FileHandler::stockLines(std::istream is) {
+void FileHandler::stockLines(std::ifstream& ifs) {
     std::string str;
     std::list<std::string> lines;
 
-    while(getline(is, str)){
+    while(getline(ifs, str)){
         lines.push_back(str);
     }
 
-    while(lines.at(0)) {
+    while(lines.size() > 0) {
         try {
-            this->_parser.parseLine(lines.at(0));
+            this->_parser.parseLine(lines.front());
         } catch (const SyntaxErrorException& e) {
             std::cerr << e.what() << std::endl;
         } catch (const CommandAfterExitException& e) {

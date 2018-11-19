@@ -15,7 +15,7 @@ public:
     virtual ~FileHandler(void);
     FileHandler &operator=(FileHandler const &rhs); //equals
 
-    void stockLines(std::istream is);
+    void stockLines(std::ifstream& ifs);
     void readStdIn();
 
 private:
@@ -23,8 +23,5 @@ private:
 
 
 };
-
-std::ostream &operator<<(std::ostream &o, FileHandler const &i);
-
 
 #endif

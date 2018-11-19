@@ -15,7 +15,7 @@
 /****************************************************************************
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
-Parser::Parser(void) {
+Parser::Parser() {
     this->_types["int8"] = eOperandType::Int8;
     this->_types["int16"] = eOperandType::Int16;
     this->_types["int32"] = eOperandType::Int32;
@@ -32,7 +32,7 @@ Parser::Parser(void) {
     this->_instructsWithArgs["push"] = &AbstractStack::push;
     this->_instructsWithArgs["assert"] = &AbstractStack::assert;
 
-    _exitBool = false;
+    this->_exitBool = false;
 }
 
 Parser::Parser(Parser const &src) {
@@ -43,8 +43,8 @@ Parser::Parser(Parser const &src) {
 /***********************************************************************
  * Destructors * Destructors * Destructors * Destructors * Destructors *
  ***********************************************************************/
-Parser::~Parser(void) {
-    if (!_exitBool)
+Parser::~Parser() {
+    if (!this->_exitBool)
         throw MissingExitException();
 }
 
@@ -104,7 +104,7 @@ void Parser::parseLine(std::string line) {
     throwableTk = Lexer::findComment(line);
     size_t pos = line.find(throwableTk.getContent());
     line.erase(pos, throwableTk.getContent().length());
-    if (line.length()) { return; }
+    if (line.length() == 0) { return; }
     if (_exitBool) { throw CommandAfterExitException(); }
 
     try {
@@ -159,39 +159,39 @@ void Parser::parseLine(std::string line) {
 
 void Parser::executeTokens(Token command) {
     try {
-        (_abstractStack->(this->*_instructs[command.getContent()]))();
-    } catch (const EmptyStackException& e) {
+        (_abstractStack->*(this->_instructs[command.getContent()]))();
+    } catch (const EmptyStackException& e)      {
         std::cerr << e.what() << std::endl;
-    } catch (const NotPrintableException& e) {
+    } catch (const NotPrintableException& e)    {
         std::cerr << e.what() << std::endl;
-    } catch (const StackTooShortException& e) {
+    } catch (const StackTooShortException& e)   {
         std::cerr << e.what() << std::endl;
-    } catch (const OverFlowException& e) {
+    } catch (const OverFlowException& e)        {
         std::cerr << e.what() << std::endl;
-    } catch (const UnderFlowException& e) {
+    } catch (const UnderFlowException& e)       {
         std::cerr << e.what() << std::endl;
-    } catch (const DivideByZeroException& e) {
+    } catch (const DivideByZeroException& e)    {
         std::cerr << e.what() << std::endl;
-    } catch (const ModOnFloatException& e) {
+    } catch (const ModOnFloatException& e)      {
         std::cerr << e.what() << std::endl;
-    } catch (const std::exception& e) {
+    } catch (const std::exception& e)           {
         std::cerr << e.what() << std::endl;
     }
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
     try {
-        IOperand const *operand = this->_factory.createOperand(this->_types[ty  e.getContent()], value.getContent());
-        (_abstractStack->(this->*_instructsWithArgs[command.getContent()]))(operand);
-    } catch (const EmptyStackException& e) {
+        IOperand const *operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
+        (_abstractStack->*(this->_instructsWithArgs[command.getContent()]))(operand);
+    } catch (const EmptyStackException& e)      {
         std::cerr << e.what() << std::endl;
-    } catch (const UnderFlowException& e) {
+    } catch (const UnderFlowException& e)       {
         std::cerr << e.what() << std::endl;
-    } catch (const OverFlowException& e) {
+    } catch (const OverFlowException& e)        {
         std::cerr << e.what() << std::endl;
-    } catch (const AssertFailException& e) {
+    } catch (const AssertFailException& e)      {
         std::cerr << e.what() << std::endl;
-    } catch (const std::exception e) {
+    } catch (const std::exception e)            {
         std::cerr << e.what() << std::endl;
     }
 
