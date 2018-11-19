@@ -24,7 +24,7 @@ AbstractStack::AbstractStack(AbstractStack const &src) {
 /***********************************************************************
  * Destructors * Destructors * Destructors * Destructors * Destructors *
  ***********************************************************************/
-AbstractStack::~AbstractStack(void) {}
+AbstractStack::~AbstractStack() {}
 
 /***********************************************************************
  * Getters * Getters * Getters * Getters * Getters * Getters * Getters *
@@ -55,7 +55,9 @@ AbstractStack &AbstractStack::operator=(AbstractStack const &rhs) {
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
 void AbstractStack::push(IOperand const * value) {
+    std::cout << "poulet" <<std::endl;
     this->_stack.push(value);
+    std::cout << "braisay" <<std::endl;
 }
 
 void AbstractStack::pop(){

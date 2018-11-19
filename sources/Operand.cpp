@@ -28,16 +28,18 @@ public:
  ****************************************************************************/
 	Operand(T value, eOperandType type) :
 			_precision(static_cast<int>(type)), //cast could nest compiling errors
-			_type(type),// may not compile
+			_type(type),
 			_value(value),
 			_txtValue(std::to_string(value)) {
 	}
 
 	Operand(T const & src) :
 			_type(src.getType()),
-			_precision(src.getPrecision())
+			_precision(src.getPrecision()),
+			_txtValue(src.toString()),
+			_value(std::stold(src.toString()))
 			{
-				*this = src;
+				//*this = src;
 	}
 
 /***********************************************************************
