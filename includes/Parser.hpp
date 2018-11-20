@@ -27,9 +27,9 @@
 class Parser {
 public:
     Parser();
-    Parser(Parser const &src);
+    Parser(Parser const &src) = default;
     virtual ~Parser();
-    Parser &operator=(Parser const &rhs);
+    Parser &operator=(Parser const &rhs) = default;
 
     void parseLine(std::string line);
     void executeTokens(Token command);

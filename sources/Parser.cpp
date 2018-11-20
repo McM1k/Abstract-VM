@@ -36,11 +36,6 @@ Parser::Parser() {
     this->_exitBool = false;
 }
 
-Parser::Parser(Parser const &src) {
-    //std::cout << "An instance of Parser has been created by copy" << std::endl;
-    *this = src;
-}
-
 /***********************************************************************
  * Destructors * Destructors * Destructors * Destructors * Destructors *
  ***********************************************************************/
@@ -60,12 +55,6 @@ Parser::~Parser() {
 /*************************************************************************
  * Operators * Operators * Operators * Operators * Operators * Operators *
  *************************************************************************/
-Parser &Parser::operator=(Parser const &rhs) {
-    if (this != &rhs) {
-        //this->XXX = rhs.getXXX();
-    }
-    return *this;
-}
 
 /******************************************************************************
  * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
@@ -106,7 +95,7 @@ void Parser::parseLine(std::string line) {
     size_t pos = line.find(throwableTk.getContent());
     line.erase(pos, throwableTk.getContent().length());
     if (line.length() == 0) { return; }
-    if (_exitBool) { throw CommandAfterExitException(); }
+    if (this->_exitBool) { throw CommandAfterExitException(); }
 
     try {
         commandTk = Lexer::findCommand(line);
@@ -117,8 +106,7 @@ void Parser::parseLine(std::string line) {
 
     if (commandTk.getContent() == "push" || commandTk.getContent() == "assert") {
         throwableTk = Lexer::findSeparator(line);
-        if (throwableTk.getContent().length() == 0)
-            throw SyntaxErrorException();
+        if (throwableTk.getContent().length() == 0) { throw SyntaxErrorException(); }
         line.erase(0, 1);//faster than getting length
 
         try {
@@ -129,8 +117,7 @@ void Parser::parseLine(std::string line) {
         }
 
         throwableTk = Lexer::findOpenBracket(line);
-        if (throwableTk.getContent().length() == 0)
-            throw SyntaxErrorException();
+        if (throwableTk.getContent().length() == 0) { throw SyntaxErrorException(); }
         line.erase(0, 1);
 
         try {
@@ -141,19 +128,16 @@ void Parser::parseLine(std::string line) {
         }
 
         throwableTk = Lexer::findCloseBracket(line);
-        if (throwableTk.getContent().length() == 0)
-            throw SyntaxErrorException();
+        if (throwableTk.getContent().length() == 0) { throw SyntaxErrorException(); }
         line.erase(0, 1);
 
-        if (line.length()) {
-            throw SyntaxErrorException();
-        }
+        if (line.length()) { throw SyntaxErrorException(); }
+
         executeTokens(commandTk, typeTk, valueTk);
     } else if (commandTk.getContent() == "exit") { this->_exitBool = true; }
     else {
-        if (line.length()) {
-            throw SyntaxErrorException();
-        }
+        if (line.length()) { throw SyntaxErrorException(); }
+
         executeTokens(commandTk);
     }
 }
