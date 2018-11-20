@@ -16,6 +16,7 @@
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
 Parser::Parser() {
+    this->_abstractStack = new AbstractStack();
     this->_types["int8"] = eOperandType::Int8;
     this->_types["int16"] = eOperandType::Int16;
     this->_types["int32"] = eOperandType::Int32;

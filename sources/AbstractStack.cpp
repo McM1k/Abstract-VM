@@ -17,14 +17,13 @@
  * Constructors * Constructors * Constructors * Constructors * Constructors *
  ****************************************************************************/
 
-AbstractStack::AbstractStack(AbstractStack const &src) {
-    *this = src;
-}
-
 /***********************************************************************
  * Destructors * Destructors * Destructors * Destructors * Destructors *
  ***********************************************************************/
-AbstractStack::~AbstractStack() {}
+AbstractStack::~AbstractStack() {
+    while (!this->_stack.empty())
+        this->_stack.pop();
+}
 
 /***********************************************************************
  * Getters * Getters * Getters * Getters * Getters * Getters * Getters *
@@ -40,12 +39,6 @@ std::stack<IOperand const *> AbstractStack::getStack() const {
 /*************************************************************************
  * Operators * Operators * Operators * Operators * Operators * Operators *
  *************************************************************************/
-AbstractStack &AbstractStack::operator=(AbstractStack const &rhs) {
-    if (this != &rhs) {
-        this->_stack = rhs.getStack();
-    }
-    return *this;
-}
 
 /******************************************************************************
  * ToString * ToString * ToString * ToString * ToString * ToString * ToString *
@@ -55,9 +48,7 @@ AbstractStack &AbstractStack::operator=(AbstractStack const &rhs) {
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
 void AbstractStack::push(IOperand const * value) {
-    std::cout << "poulet" <<std::endl;
     this->_stack.push(value);
-    std::cout << "braisay" <<std::endl;
 }
 
 void AbstractStack::pop(){
