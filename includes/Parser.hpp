@@ -31,6 +31,7 @@ public:
     virtual ~Parser();
     Parser &operator=(Parser const &rhs) = default;
 
+    void checkExit();
     void parseLine(std::string line);
     void executeTokens(Token command);
     void executeTokens(Token command, Token type, Token value);

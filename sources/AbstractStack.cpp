@@ -61,12 +61,12 @@ void AbstractStack::pop(){
 }
 
 void AbstractStack::dump() {
-    AbstractStack dumpedStack = AbstractStack(*this);
+    std::stack<IOperand const *> dumpedStack = this->_stack;
     std::stringstream ss;
 
-    while (!dumpedStack.getStack().empty()){
-        ss << dumpedStack.getStack().top()->toString() << std::endl;
-        dumpedStack.getStack().pop();
+    while (!dumpedStack.empty()){
+        ss << dumpedStack.top()->toString() << std::endl;
+        dumpedStack.pop();
     }
 
     std::cout << ss.str();
@@ -75,7 +75,8 @@ void AbstractStack::dump() {
 void AbstractStack::assert(IOperand const * value){
     if (this->_stack.empty())
         throw EmptyStackException();
-    else if (!(this->_stack.top()->toString() == value->toString()))
+    else if (!(this->_stack.top()->toString() == value->toString())
+            || (this->_stack.top()->getType() != value->getType()))
         throw AssertFailException();
 }
 

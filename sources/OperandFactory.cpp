@@ -53,8 +53,10 @@ IOperand const* OperandFactory::createOperand(eOperandType type, const std::stri
 
 IOperand const* OperandFactory::createInt8(const std::string &value) const{
 	char min = std::numeric_limits<char>::min(), max = std::numeric_limits<char>::max();
-	long long tmpValue = std::stoll(value, nullptr);
+	long double tmpValue = std::stold(value, nullptr);
 
+	if (value.find('.') != std::string::npos)
+	    throw FloatOnIntException();
 	if (tmpValue < min)
 		throw UnderFlowException();
 	if (tmpValue > max)
@@ -67,8 +69,10 @@ IOperand const* OperandFactory::createInt8(const std::string &value) const{
 
 IOperand const* OperandFactory::createInt16(const std::string &value) const{
 	short int min = std::numeric_limits<short int>::min(), max = std::numeric_limits<short int>::max();
-	long long tmpValue = std::stoll(value, nullptr);
+	long double tmpValue = std::stold(value, nullptr);
 
+    if (value.find('.') != std::string::npos)
+        throw FloatOnIntException();
 	if (tmpValue < min)
 		throw UnderFlowException();
 	if (tmpValue > max)
@@ -81,7 +85,10 @@ IOperand const* OperandFactory::createInt16(const std::string &value) const{
 
 IOperand const* OperandFactory::createInt32(const std::string &value) const{
 	int min = std::numeric_limits<int>::min(), max = std::numeric_limits<int>::max();
-	long long tmpValue = std::stoll(value, nullptr);
+	long double tmpValue = std::stold(value, nullptr);
+
+    if (value.find('.') != std::string::npos)
+        throw FloatOnIntException();
 	if (tmpValue < min)
 		throw UnderFlowException();
 	if (tmpValue > max)
@@ -95,6 +102,7 @@ IOperand const* OperandFactory::createInt32(const std::string &value) const{
 IOperand const* OperandFactory::createFloat(const std::string &value) const{
 	float min = std::numeric_limits<float>::max() * - 1, max = std::numeric_limits<float>::max();
 	long double tmpValue = std::stold(value, nullptr);
+
 	if (tmpValue < min)
 		throw UnderFlowException();
 	if (tmpValue > max)
@@ -108,6 +116,7 @@ IOperand const* OperandFactory::createFloat(const std::string &value) const{
 IOperand const* OperandFactory::createDouble(const std::string &value) const{
 	double min = std::numeric_limits<double>::max() * -1, max = std::numeric_limits<double>::max();
 	long double tmpValue = std::stold(value, nullptr);
+
 	if (tmpValue < min)
 		throw UnderFlowException();
 	if (tmpValue > max)

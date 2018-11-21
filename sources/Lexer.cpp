@@ -136,7 +136,7 @@ Token Lexer::findType(std::string s) {
 
 Token Lexer::findValue(std::string s) {
     std::smatch sm;
-    std::regex rgx("^([0-9])+(\\.([0-9])+)?");
+    std::regex rgx("^(-)?([0-9])+(\\.([0-9])+)?");
 
     std::regex_search(s, sm, rgx);
     if (!sm[0].matched)

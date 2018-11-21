@@ -16,6 +16,13 @@ public :
     }
 };
 
+class FloatOnIntException : public std::exception {//
+public :
+    virtual const char *what() const throw(){
+        return "Can't create an Integer operand with a float value";
+    }
+};
+
 class DivideByZeroException : public std::exception {//
 public :
     virtual const char *what() const throw(){

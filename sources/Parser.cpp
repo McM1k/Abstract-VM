@@ -40,8 +40,8 @@ Parser::Parser() {
  * Destructors * Destructors * Destructors * Destructors * Destructors *
  ***********************************************************************/
 Parser::~Parser() {
-    if (!this->_exitBool)
-        throw MissingExitException();
+    try { checkExit(); }
+    catch (const MissingExitException &e) { std::cerr << e.what() << std::endl; }
 }
 
 /***********************************************************************
@@ -64,26 +64,10 @@ Parser::~Parser() {
 /*************************************************************************
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
-//std::list<std::string> Parser::stockLines(/*file*/) {
-//    std::string str;
-//    std::list<std::string> lines;
-//
-//    while (getline(file.firstLine, str)){
-//
-//    }
-//}
-//
-//std::list<std::string> Parser::splitLines(std::istream is) {
-//    std::string str;
-//    std::list<std::string> lines;
-//
-//    while(getline(is, str)){
-//        lines.push_back(str);
-//    }
-//
-//    lines = this->_lines;
-//    return lines;
-//}
+void Parser::checkExit() {
+    if (!this->_exitBool)
+        throw MissingExitException();
+}
 
 void Parser::parseLine(std::string line) {
     Token throwableTk;
@@ -97,11 +81,8 @@ void Parser::parseLine(std::string line) {
     if (line.length() == 0) { return; }
     if (this->_exitBool) { throw CommandAfterExitException(); }
 
-    try {
-        commandTk = Lexer::findCommand(line);
-    } catch (const UnknownCommandException &e) {
-        std::cerr << e.what() << std::endl;
-    }
+    try { commandTk = Lexer::findCommand(line); }
+    catch (const UnknownCommandException &e) { std::cerr << e.what() << std::endl; }
     line.erase(0, commandTk.getContent().length());
 
     if (commandTk.getContent() == "push" || commandTk.getContent() == "assert") {
@@ -112,9 +93,7 @@ void Parser::parseLine(std::string line) {
         try {
             typeTk = Lexer::findType(line);
             line.erase(0, typeTk.getContent().length());
-        } catch (const UnknownTypeException &e) {
-            std::cerr << e.what() << std::endl;
-        }
+        } catch (const UnknownTypeException &e) { std::cerr << e.what() << std::endl; }
 
         throwableTk = Lexer::findOpenBracket(line);
         if (throwableTk.getContent().length() == 0) { throw SyntaxErrorException(); }
@@ -123,9 +102,7 @@ void Parser::parseLine(std::string line) {
         try {
             valueTk = Lexer::findValue(line);
             line.erase(0, valueTk.getContent().length());
-        } catch (const BadValueException &e) {
-            std::cerr << e.what() << std::endl;
-        }
+        } catch (const BadValueException &e) { std::cerr << e.what() << std::endl; }
 
         throwableTk = Lexer::findCloseBracket(line);
         if (throwableTk.getContent().length() == 0) { throw SyntaxErrorException(); }
@@ -145,41 +122,28 @@ void Parser::parseLine(std::string line) {
 void Parser::executeTokens(Token command) {
     try {
         (_abstractStack->*(this->_instructs[command.getContent()]))();
-    } catch (const EmptyStackException& e)      {
-        std::cerr << e.what() << std::endl;
-    } catch (const NotPrintableException& e)    {
-        std::cerr << e.what() << std::endl;
-    } catch (const StackTooShortException& e)   {
-        std::cerr << e.what() << std::endl;
-    } catch (const OverFlowException& e)        {
-        std::cerr << e.what() << std::endl;
-    } catch (const UnderFlowException& e)       {
-        std::cerr << e.what() << std::endl;
-    } catch (const DivideByZeroException& e)    {
-        std::cerr << e.what() << std::endl;
-    } catch (const ModOnFloatException& e)      {
-        std::cerr << e.what() << std::endl;
-    } catch (const std::exception& e)           {
-        std::cerr << e.what() << std::endl;
     }
+    catch (const EmptyStackException& e)      { std::cerr << e.what() << std::endl; }
+    catch (const NotPrintableException& e)    { std::cerr << e.what() << std::endl; }
+    catch (const StackTooShortException& e)   { std::cerr << e.what() << std::endl; }
+    catch (const OverFlowException& e)        { std::cerr << e.what() << std::endl; }
+    catch (const UnderFlowException& e)       { std::cerr << e.what() << std::endl; }
+    catch (const DivideByZeroException& e)    { std::cerr << e.what() << std::endl; }
+    catch (const ModOnFloatException& e)      { std::cerr << e.what() << std::endl; }
+    catch (const std::exception& e)           { std::cerr << e.what() << std::endl; }
 }
 
 void Parser::executeTokens(Token command, Token type, Token value) {
     try {
         IOperand const *operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
         (_abstractStack->*(this->_instructsWithArgs[command.getContent()]))(operand);
-    } catch (const EmptyStackException& e)      {
-        std::cerr << e.what() << std::endl;
-    } catch (const UnderFlowException& e)       {
-        std::cerr << e.what() << std::endl;
-    } catch (const OverFlowException& e)        {
-        std::cerr << e.what() << std::endl;
-    } catch (const AssertFailException& e)      {
-        std::cerr << e.what() << std::endl;
-    } catch (const std::exception e)            {
-        std::cerr << e.what() << std::endl;
     }
-
+    catch (const FloatOnIntException& e)      { std::cerr << e.what() << std::endl; }
+    catch (const EmptyStackException& e)      { std::cerr << e.what() << std::endl; }
+    catch (const UnderFlowException& e)       { std::cerr << e.what() << std::endl; }
+    catch (const OverFlowException& e)        { std::cerr << e.what() << std::endl; }
+    catch (const AssertFailException& e)      { std::cerr << e.what() << std::endl; }
+    catch (const std::exception& e)           { std::cerr << e.what() << std::endl; }
 }
 
 /*******************************************************************************
