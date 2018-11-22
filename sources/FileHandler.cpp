@@ -52,34 +52,38 @@ void FileHandler::readStdIn() {
     while(getline(std::cin, str) && str != ";;") {
         try {
             this->_parser.parseLine(str);
-        } catch (const SyntaxErrorException& e) {
-            std::cerr << e.what() << std::endl;
-        } catch (const CommandAfterExitException& e) {
-            std::cerr << e.what() << std::endl;
-        } catch (const std::exception& e) {
-            std::cerr << e.what() << std::endl;
         }
+        catch (const BadValueException &e)          { std::cerr << e.what() << std::endl; }
+        catch (const UnknownTypeException &e)       { std::cerr << e.what() << std::endl; }
+        catch (const UnknownCommandException &e)    { std::cerr << e.what() << std::endl; }
+        catch (const SyntaxErrorException& e)       { std::cerr << e.what() << std::endl; }
+        catch (const CommandAfterExitException& e)  { std::cerr << e.what() << std::endl; }
+        catch (const std::exception& e)             { std::cerr << e.what() << std::endl; }
     }
 }
 
-void FileHandler::stockLines(std::ifstream& ifs) {
+void FileHandler::stockLines(char *fileName) {
+    std::ifstream file;
     std::string str;
     std::list<std::string> lines;
 
-    while(getline(ifs, str)){
+    file.open(fileName);
+    if (!file.is_open()) { throw(FailedToOpenException()); }
+
+    while(std::getline(file, str)){
         lines.push_back(str);
     }
 
     while(lines.size() > 0) {
         try {
             this->_parser.parseLine(lines.front());
-        } catch (const SyntaxErrorException& e) {
-            std::cerr << e.what() << std::endl;
-        } catch (const CommandAfterExitException& e) {
-            std::cerr << e.what() << std::endl;
-        } catch (const std::exception& e) {
-            std::cerr << e.what() << std::endl;
         }
+        catch (const BadValueException &e)          { std::cerr << e.what() << std::endl; }
+        catch (const UnknownTypeException &e)       { std::cerr << e.what() << std::endl; }
+        catch (const UnknownCommandException &e)    { std::cerr << e.what() << std::endl; }
+        catch (const SyntaxErrorException& e)       { std::cerr << e.what() << std::endl; }
+        catch (const CommandAfterExitException& e)  { std::cerr << e.what() << std::endl; }
+        catch (const std::exception& e)             { std::cerr << e.what() << std::endl; }
         lines.pop_front();
     }
 }
@@ -88,3 +92,6 @@ void FileHandler::stockLines(std::ifstream& ifs) {
 /*******************************************************************************
  * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions * Exceptions *
  *******************************************************************************/
+ const char* FileHandler::FailedToOpenException::what() const throw(){
+     return "Couldn't open file";
+ }

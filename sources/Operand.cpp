@@ -90,64 +90,40 @@ public:
  * Other * Other * Other * Other * Other * Other * Other * Other * Other *
  *************************************************************************/
 	IOperand const * operator+( IOperand const & rhs ) const{
-        long double a = static_cast<long long>(this->_value);
-        long double b = static_cast<long long>(std::stold(rhs.toString()));
+        long double a = static_cast<long double>(this->_value);
+        long double b = std::stold(rhs.toString());
 
 		long double result = a + b;
-		eOperandType resultType;
-
-        if (this->getPrecision() >= rhs.getPrecision()){
-			resultType = this->getType();
-        } else {
-			resultType = rhs.getType();
-        }
+        eOperandType resultType = chooseType(*this, rhs);
 		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
 	IOperand const * operator-( IOperand const & rhs ) const{
-        long double a = static_cast<long long>(this->_value);
-        long double b = static_cast<long long>(std::stold(rhs.toString()));
+        long double a = static_cast<long double>(this->_value);
+        long double b = std::stold(rhs.toString());
 
 		long double result = a - b;
-		eOperandType resultType;
-
-		if (this->getPrecision() >= rhs.getPrecision()){
-			resultType = this->getType();
-		} else {
-			resultType = rhs.getType();
-		}
+        eOperandType resultType = chooseType(*this, rhs);
 		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
 	IOperand const * operator*( IOperand const & rhs ) const{
-        long double a = static_cast<long long>(this->_value);
-        long double b = static_cast<long long>(std::stold(rhs.toString()));
+        long double a = static_cast<long double>(this->_value);
+        long double b = std::stold(rhs.toString());
 
 		long double result = a * b;
-		eOperandType resultType;
-
-		if (this->getPrecision() >= rhs.getPrecision()){
-			resultType = this->getType();
-		} else {
-			resultType = rhs.getType();
-		}
+        eOperandType resultType = chooseType(*this, rhs);
 		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
 	IOperand const * operator/( IOperand const & rhs ) const{
-		long double a = static_cast<long long>(this->_value);
-		long double b = static_cast<long long>(std::stold(rhs.toString()));
+		long double a = static_cast<long double>(this->_value);
+		long double b = std::stold(rhs.toString());
 		if (b == 0)
 			throw DivideByZeroException();
 
 		long double result = a / b;
-		eOperandType resultType;
-
-		if (this->getPrecision() >= rhs.getPrecision()){
-			resultType = this->getType();
-		} else {
-			resultType = rhs.getType();
-		}
+        eOperandType resultType = chooseType(*this, rhs);
 		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
@@ -161,13 +137,7 @@ public:
 			throw DivideByZeroException();
 
 		long long result = a % b;
-		eOperandType resultType;
-
-		if (this->getPrecision() >= rhs.getPrecision()){
-			resultType = this->getType();
-		} else {
-			resultType = rhs.getType();
-		}
+		eOperandType resultType = chooseType(*this, rhs);
 		return this->_factory.createOperand(resultType, std::to_string(result));
 	}
 
@@ -180,6 +150,16 @@ private:
 	OperandFactory			const	_factory;
 
 	Operand() = default;
+	eOperandType chooseType(IOperand const &a, IOperand const &b) const{
+	    eOperandType resultType;
+
+        if (a.getPrecision() >= b.getPrecision()){
+            resultType = a.getType();
+        } else {
+            resultType = b.getType();
+        }
+        return resultType;
+	}
 };
 
 #endif

@@ -15,13 +15,15 @@ public:
     virtual ~FileHandler(void);
     FileHandler &operator=(FileHandler const &rhs); //equals
 
-    void stockLines(std::ifstream& ifs);
+    void stockLines(char *fileName);
     void readStdIn();
 
+    class FailedToOpenException : public std::exception {
+    public:
+        virtual const char *what() const throw();
+    };
 private:
     Parser                  _parser;
-
-
 };
 
 #endif

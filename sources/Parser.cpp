@@ -81,8 +81,7 @@ void Parser::parseLine(std::string line) {
     if (line.length() == 0) { return; }
     if (this->_exitBool) { throw CommandAfterExitException(); }
 
-    try { commandTk = Lexer::findCommand(line); }
-    catch (const UnknownCommandException &e) { std::cerr << e.what() << std::endl; }
+    commandTk = Lexer::findCommand(line);
     line.erase(0, commandTk.getContent().length());
 
     if (commandTk.getContent() == "push" || commandTk.getContent() == "assert") {
@@ -90,19 +89,15 @@ void Parser::parseLine(std::string line) {
         if (throwableTk.getContent().length() == 0) { throw SyntaxErrorException(); }
         line.erase(0, 1);//faster than getting length
 
-        try {
-            typeTk = Lexer::findType(line);
-            line.erase(0, typeTk.getContent().length());
-        } catch (const UnknownTypeException &e) { std::cerr << e.what() << std::endl; }
+        typeTk = Lexer::findType(line);
+        line.erase(0, typeTk.getContent().length());
 
         throwableTk = Lexer::findOpenBracket(line);
         if (throwableTk.getContent().length() == 0) { throw SyntaxErrorException(); }
         line.erase(0, 1);
 
-        try {
-            valueTk = Lexer::findValue(line);
-            line.erase(0, valueTk.getContent().length());
-        } catch (const BadValueException &e) { std::cerr << e.what() << std::endl; }
+        valueTk = Lexer::findValue(line);
+        line.erase(0, valueTk.getContent().length());
 
         throwableTk = Lexer::findCloseBracket(line);
         if (throwableTk.getContent().length() == 0) { throw SyntaxErrorException(); }
@@ -135,6 +130,10 @@ void Parser::executeTokens(Token command) {
 
 void Parser::executeTokens(Token command, Token type, Token value) {
     try {
+        if (type.getContent().find("int") != std::string::npos
+        && value.getContent().find('.') != std::string::npos)
+        { throw FloatOnIntException(); }
+
         IOperand const *operand = this->_factory.createOperand(this->_types[type.getContent()], value.getContent());
         (_abstractStack->*(this->_instructsWithArgs[command.getContent()]))(operand);
     }
